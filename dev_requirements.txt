@@ -1,0 +1,6 @@
+# Import main requirements
+-r requirements.txt
+
+coverage
+factory_boy
+pylint
