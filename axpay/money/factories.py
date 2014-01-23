@@ -10,6 +10,8 @@ import factory
 import factory.django
 import factory.fuzzy
 
+from django_factory_boy import auth as auth_factories
+
 from . import models
 
 class ServiceFactory(factory.django.DjangoModelFactory):
@@ -31,7 +33,7 @@ class ServicePriceFactory(factory.django.DjangoModelFactory):
 class PaymentModeFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.PaymentMode
 
-    owner = factory.SubFactory(todo.UserFactory)
+    owner = factory.SubFactory(auth_factories.UserF)
     kind = factory.Iterator([c.0 for c in models.PaymentMode.KIND_CHOICES])
     reference = factory.Sequence(lambda n: "42-42-%12d" % n)
 
@@ -47,7 +49,7 @@ class CashFlowFactory(factory.django.DjangoModelFactory):
 class PaymentFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Payment
 
-    user = factory.SubFactory(todo.UserFactory)
+    user = factory.SubFactory(auth_factories.UserF)
     service_price = models.SubFactory(ServicePriceFactory)
     cashflow = models.SubFactory(CashFlowFactory,
         # Forward '.user' to the cashflow.payment_mode.owner
