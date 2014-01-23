@@ -12,7 +12,7 @@ from . import models
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ['kind', 'name']
     search_fields = ['kind', 'name']
-    filter_fields = ['kind']
+    list_filter = ['kind']
 
 admin.site.register(models.Service, ServiceAdmin)
 
@@ -20,7 +20,7 @@ admin.site.register(models.Service, ServiceAdmin)
 class ServicePriceAdmin(admin.ModelAdmin):
     list_display = ['service', 'amount', 'available_since', 'available_until']
     search_fields = ['service__kind', 'service__name']
-    filter_fields = ['service', 'available_since', 'available_until']
+    list_filter = ['service', 'available_since', 'available_until']
     date_hierarchy = 'available_since'
 
 admin.site.register(models.ServicePrice, ServicePriceAdmin)
@@ -29,7 +29,7 @@ admin.site.register(models.ServicePrice, ServicePriceAdmin)
 class PaymentModeAdmin(admin.ModelAdmin):
     list_display = ['reference', 'owner', 'kind']
     search_fields = ['reference', 'owner__first_name', 'owner__last_name']
-    filter_fields = ['kind']
+    list_filter = ['kind']
 
 admin.site.register(models.PaymentMode, PaymentModeAdmin)
 
@@ -37,7 +37,7 @@ admin.site.register(models.PaymentMode, PaymentModeAdmin)
 class CashFlowAdmin(admin.ModelAdmin):
     list_display = ['payment_mode', 'payment_date', 'amount']
     search_fields = ['payment_mode__owner__first_name', 'payment_mode__owner__last_name']
-    filter_fields = ['payment_mode__kind', 'payment_date']
+    list_filter = ['payment_mode__kind', 'payment_date']
     date_hierarchy = 'payment_date'
 
 admin.site.register(models.CashFlow, CashFlowAdmin)

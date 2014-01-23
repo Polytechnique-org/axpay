@@ -12,6 +12,7 @@ docs/_build/
 .tox
 *.egg-info
 *.egg
+*.mo
 build/
 dist/
 htmlcov/

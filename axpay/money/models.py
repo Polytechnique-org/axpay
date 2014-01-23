@@ -89,7 +89,7 @@ class PaymentMode(models.Model):
         verbose_name_plural = _("payment modes")
 
     def __str__(self):
-        return '%s (%s) for %s' % (self.reference, self.get_kind_display(), self.owner.get_full_name())
+        return '%s (%s) for %s' % (self.reference, self.get_kind_display(), self.owner.get_full_name() or self.owner.username)
 
 
 class CashFlow(models.Model):
@@ -111,7 +111,7 @@ class CashFlow(models.Model):
     def __str__(self):
         return "%s on %s at %s" % (
             utils.currency(self.amount),
-            self.payment_mode,
+            self.payment_mode.reference,
             self.payment_date,
         )
 
@@ -135,4 +135,4 @@ class Payment(models.Model):
         verbose_name_plural = _("payments")
 
     def __str__(self):
-        return "%s for %s on %s" % (self.service_price, self.user, self.cashflow)
+        return "%s for %s on %s" % (self.service_price.service.name, self.user, self.cashflow)
