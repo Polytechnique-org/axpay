@@ -2,5 +2,6 @@
 -r requirements.txt
 
 coverage
+django-factory_boy
 factory_boy
 pylint
