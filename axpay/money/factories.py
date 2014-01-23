@@ -17,7 +17,7 @@ from . import models
 class ServiceFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.Service
 
-    kind = factory.Iterator([c.0 for c in models.Service.KIND_CHOICES])
+    kind = factory.Iterator([c[0] for c in models.Service.KIND_CHOICES])
     name = factory.Sequence(lambda n: "Service #%s" % n)
 
 
@@ -34,7 +34,7 @@ class PaymentModeFactory(factory.django.DjangoModelFactory):
     FACTORY_FOR = models.PaymentMode
 
     owner = factory.SubFactory(auth_factories.UserF)
-    kind = factory.Iterator([c.0 for c in models.PaymentMode.KIND_CHOICES])
+    kind = factory.Iterator([c[0] for c in models.PaymentMode.KIND_CHOICES])
     reference = factory.Sequence(lambda n: "42-42-%12d" % n)
 
 
