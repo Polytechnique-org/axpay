@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load bootstrap i18n %}
+
+{% block content %}
+{# Centering: the base grid is 2|10 #}
+<div class="col-lg-6 col-lg-offset-1 well">
+  <h3>{% blocktrans %}You have been logged out.{% endblocktrans %}</h3>
+
+  <a class="btn" href="{% url 'login' %}">Log back in</a>
+</div>
+</form>
+{% endblock %}

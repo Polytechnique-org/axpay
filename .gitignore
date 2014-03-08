@@ -4,9 +4,11 @@
 *.pyo
 
 # Local dev files
-db.sqlite3
+db.sqlite
+local_settings.ini
 
 # Build-related files
+axpay/static/
 docs/_build/
 .coverage
 .tox

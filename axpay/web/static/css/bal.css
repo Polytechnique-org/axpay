@@ -1,0 +1,12 @@
+.container-fluid {
+  /* Remove extra padding required when mixing grid and fluid layout.
+   * See https://github.com/twbs/bootstrap/commit/f660bd42052949124a2c3342dadcdb12fd979f02
+   */
+  padding: 0 15px;
+}
+
+a.language {
+  /* Override Bootstrap' handling of in-navbar <a> tags. */
+  display: inline !important;
+  padding: 0 !important;
+}

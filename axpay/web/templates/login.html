@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% load bootstrap i18n %}
+
+{% block content %}
+<h3>{% trans "Authenticate" %}</h3>
+  <p><a href="{% url 'authgroupex:login'%}?next={{ next }}">Connect through X.org</a></p>
+{% endblock %}

@@ -1,7 +1,16 @@
 # Import main requirements
 -r requirements.txt
 
-coverage
+django-debug-toolbar
+
 django-factory_boy
 factory_boy
+
+# For doc
+Sphinx
+sphinx_rtd_theme
+
+# For tests
+coverage
+unittest-xml-reporting
 pylint

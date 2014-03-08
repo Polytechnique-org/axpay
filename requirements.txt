@@ -1,4 +1,7 @@
 Django>=1.6.0
-South
+South>=0.8
+pytz>=2012a
+
 django-authgroupex
-pytz
+django-bootstrap-form>=3.0.0
+django-braces>=1.2.2

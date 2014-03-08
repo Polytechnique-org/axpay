@@ -1,6 +1,7 @@
 MANAGE_PY = python manage.py
 ROOT_DIR = axpay
-SERVICES = www
+DOC_DIR = docs
+SERVICES = core www
 
 MANAGE_OPTIONS = --noinput --traceback
 RUN_OPTIONS = --traceback
@@ -36,6 +37,7 @@ The following commands are available.
 - Misc:
     clean:      	Cleanup all temporary files (*.pyc, ...)
     doc:        	Generate the documentation
+    viewdoc:		Open a web browser on the (local) documentation
     help:       	Display this help message
 endef
 
@@ -57,12 +59,12 @@ help:
 # =======
 
 run_www: static_www compilemessages
-	$(MANAGE_PY) runserver $(RUN_OPTIONS) 8000
+	AXPAY_SERVICE=www $(MANAGE_PY) runserver $(RUN_OPTIONS) 8000
 
 shell:
 	$(MANAGE_PY) shell
 
-.PHONY: run_www
+.PHONY: run_www shell
 
 
 # Preparation & compilation
@@ -73,7 +75,7 @@ STATICS = $(addprefix static_,$(SERVICES))
 static: $(STATICS)
 
 $(STATICS): static_% :
-	SERVICE=$* $(MANAGE_PY) collectstatic $(MANAGE_OPTIONS) --verbosity=0
+	AXPAY_SERVICE=$* $(MANAGE_PY) collectstatic $(MANAGE_OPTIONS) --verbosity=0
 
 PO_FILES = $(shell find $(ROOT_DIR) -name '*.po')
 
@@ -99,7 +101,7 @@ test: $(TESTS)
 	@:
 
 $(TESTS): test_% : static_%
-	SERVICE=$* $(MANAGE_PY) test $(MANAGE_OPTIONS)
+	AXPAY_SERVICE=$* $(MANAGE_PY) test $(MANAGE_OPTIONS)
 
 resetdb:
 	rm -f db.sqlite
@@ -118,7 +120,7 @@ jenkins: $(JENKINS_TARGETS)
 
 $(JENKINS_TARGETS): jenkins_% : static_%
 	@echo "Running tests on $*..."
-	SERVICE=$* DEV_JENKINS=1 $(MANAGE_PY) test $(MANAGE_OPTIONS)
+	AXPAY_SERVICE=$* DEV_JENKINS=1 $(MANAGE_PY) test $(MANAGE_OPTIONS)
 
 
 .PHONY: jenkins $(JENKINS_TARGETS)
@@ -130,11 +132,14 @@ $(JENKINS_TARGETS): jenkins_% : static_%
 clean:
 	find . "(" -name "*.pyc" -or -name "*.pyo" -or -name "*.mo" ")" -delete
 	find . -type d -empty -delete
-	rm -rf bal/static/*
+	rm -rf axpay/static/*
 	rm -rf reports/
 
 doc:
-	$(MAKE) -C doc html
+	$(MAKE) -C $(DOC_DIR) html
+
+viewdoc: doc
+	python -c "import webbrowser; webbrowser.open('$(DOC_DIR)/_build/html/index.html')"
 
 
 .PHONY: clean doc
