@@ -1,6 +1,7 @@
 Django>=1.6.0
 South>=0.8
 pytz>=2012a
+getconf
 
 django-authgroupex
 django-bootstrap-form>=3.0.0
