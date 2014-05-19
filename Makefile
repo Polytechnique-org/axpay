@@ -30,6 +30,7 @@ The following commands are available.
 
 - Database:
     resetdb:    	Reinitialize the database schema
+    demodb:		Reinitialize the database to a demo-ready setup
 
 - Testing:
     test:		Run the test suite
@@ -107,7 +108,10 @@ resetdb:
 	rm -f db.sqlite
 	$(MANAGE_PY) syncdb $(MANAGE_OPTIONS)
 
-.PHONY: resetdb test $(TESTS)
+demodb: resetdb
+	$(MANAGE_PY) loaddemo $(MANAGE_OPTIONS)
+
+.PHONY: demodb resetdb test $(TESTS)
 
 
 # Continuous integration
