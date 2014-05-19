@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-23 01:23+0100\n"
+"POT-Creation-Date: 2014-05-19 21:55+0200\n"
 "PO-Revision-Date: 2014-01-23 01:23+0100\n"
 "Last-Translator: Raphaël Barrois <raphael.barrois+axpay@polytechnique.org>\n"
 "Language-Team: Polytechnique.org dev team <opensource+axpay@polytechnique.org>\n"
@@ -143,3 +143,52 @@ msgstr "paiment"
 #: money/models.py:135
 msgid "payments"
 msgstr "paiements"
+
+#: util/templatetags/money.py:17
+#, python-format
+msgid "€ %s"
+msgstr "%s €"
+
+#: web/templates/base.html:5
+msgid "AX/Pay — Management"
+msgstr "AX/Pay — Administration"
+
+#: web/templates/base.html:27
+msgid "Admin"
+msgstr "Administration"
+
+#: web/templates/base.html:37
+msgid "Welcome,"
+msgstr "Bienvenue,"
+
+#: web/templates/base.html:43
+msgid "Lang:"
+msgstr "Langue :"
+
+#: web/templates/base.html:55
+msgid "Log Out"
+msgstr "Déconnexion"
+
+#: web/templates/index.html:5
+msgid "Metrics"
+msgstr "Indicateurs"
+
+#: web/templates/index.html:8
+msgid "Orders"
+msgstr "Commandes"
+
+#: web/templates/index.html:12
+msgid "Sold"
+msgstr "Vendu"
+
+#: web/templates/index.html:16
+msgid "Paid"
+msgstr "Payé"
+
+#: web/templates/login.html:6
+msgid "Authenticate"
+msgstr "Authentification"
+
+#: web/templates/logout.html:8
+msgid "You have been logged out."
+msgstr "Vous avez été déconnecté"
