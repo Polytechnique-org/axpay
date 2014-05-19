@@ -3,7 +3,7 @@ ROOT_DIR = axpay
 DOC_DIR = docs
 SERVICES = core www
 
-MANAGE_OPTIONS = --noinput --traceback
+MANAGE_OPTIONS = --traceback
 RUN_OPTIONS = --traceback
 
 # In order to help newcomers, this variable holds a full doc of the current Makefile.
@@ -76,7 +76,7 @@ STATICS = $(addprefix static_,$(SERVICES))
 static: $(STATICS)
 
 $(STATICS): static_% :
-	AXPAY_SERVICE=$* $(MANAGE_PY) collectstatic $(MANAGE_OPTIONS) --verbosity=0
+	AXPAY_SERVICE=$* $(MANAGE_PY) collectstatic --noinput $(MANAGE_OPTIONS) --verbosity=0
 
 PO_FILES = $(shell find $(ROOT_DIR) -name '*.po')
 
@@ -106,7 +106,7 @@ $(TESTS): test_% : static_%
 
 resetdb:
 	rm -f db.sqlite
-	$(MANAGE_PY) syncdb $(MANAGE_OPTIONS)
+	$(MANAGE_PY) syncdb --noinput $(MANAGE_OPTIONS)
 
 demodb: resetdb
 	$(MANAGE_PY) loaddemo $(MANAGE_OPTIONS)
