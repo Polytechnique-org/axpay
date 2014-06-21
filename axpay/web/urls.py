@@ -28,6 +28,9 @@ urlpatterns += patterns('',
 )
 
 # Libs
+
+admin.site.login_template = 'authgroupex/admin_login.html'
+
 urlpatterns += patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
