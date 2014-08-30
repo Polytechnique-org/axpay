@@ -17,14 +17,16 @@ from django_factory_boy import auth as auth_factories
 from . import models
 
 class ServiceFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Service
+    class Meta:
+        model = models.Service
 
     kind = factory.Iterator([c[0] for c in models.Service.KIND_CHOICES])
     name = factory.Sequence(lambda n: "Service #%s" % n)
 
 
 class ServicePriceFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.ServicePrice
+    class Meta:
+        model = models.ServicePrice
 
     service = factory.SubFactory(ServiceFactory)
     amount = factory.fuzzy.FuzzyInteger(100, 10000, step=50)
@@ -33,7 +35,8 @@ class ServicePriceFactory(factory.django.DjangoModelFactory):
 
 
 class PaymentModeFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.PaymentMode
+    class Meta:
+        model = models.PaymentMode
 
     owner = factory.SubFactory(auth_factories.UserF)
     kind = factory.Iterator([c[0] for c in models.PaymentMode.KIND_CHOICES])
@@ -41,7 +44,8 @@ class PaymentModeFactory(factory.django.DjangoModelFactory):
 
 
 class CashFlowFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.CashFlow
+    class Meta:
+        model = models.CashFlow
 
     payment_mode = factory.SubFactory(PaymentModeFactory)
     payment_date = factory.LazyAttribute(lambda _o: timezone.now())
@@ -49,7 +53,8 @@ class CashFlowFactory(factory.django.DjangoModelFactory):
 
 
 class PaymentFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = models.Payment
+    class Meta:
+        model = models.Payment
 
     user = factory.SubFactory(auth_factories.UserF)
     service_price = models.SubFactory(ServicePriceFactory)
