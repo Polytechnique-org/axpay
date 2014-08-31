@@ -26,3 +26,23 @@ def topnavclass(context, name):
         return "active"
     else:
         return "inactive"
+
+
+@register.simple_tag(takes_context=True)
+def sidenavclass(context, name):
+    """Create a "side-navbar" link.
+
+    Usage:
+        {% sidenavlink name='home' url='index' text=_("Home") %}
+
+    Translates into:
+    - If the 'sidenav' context var equals 'home':
+        <a href="{% url 'index' %}" class="active">{% trans "Home" %}</a>
+    - Otherwise:
+        <a href="{% url 'index' %}">{% trans "Home" %}</a>
+    """
+    sidenav = context.get('sidenav')
+    if sidenav == name:
+        return "active"
+    else:
+        return "inactive"

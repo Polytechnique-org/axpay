@@ -14,6 +14,7 @@ from . import forms
 
 class PaymentRegisterView(generic.FormView):
     topnav = 'sales'
+    sidenav = 'payment-register'
 
     form_class = forms.PaymentRegisterForm
     template_name = 'sales/payment_register.html'
@@ -27,4 +28,5 @@ class PaymentRegisterView(generic.FormView):
 
 class SalesIndexView(generic.TemplateView):
     topnav = 'sales'
+    sidenav = 'index'
     template_name = 'sales/index.html'
