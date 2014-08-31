@@ -1,0 +1,40 @@
+{% extends 'sales/base.html' %}
+
+{% load i18n money %}
+
+{% block content %}
+<h3>{% blocktrans with cashflow_id=cashflow.pk %}Cashflow #{{ cashflow_id }}{% endblocktrans %}</h3>
+
+<dl class="dl-horizontal">
+    <dt>{% trans "Reference" %}</dt><dd><samp>{{ cashflow.payment_mode.reference }}</samp></dd>
+    <dt>{% trans "Date" %}</dt><dd>{{ cashflow.payment_date }}</dd>
+    <dt>{% trans "Payment mode" %}</dt><dd>{{ cashflow.payment_mode.get_kind_display }}</dd>
+    <dt>{% trans "Payer" %}</dt><dd>{{ cashflow.payment_mode.owner.get_full_name }}</dd>
+    <dt>{% trans "Amount" %}</dt><dd>{{ cashflow.amount|price }}</dd>
+</dl>
+
+<table class="table table-stripped table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>{% trans "Service" %}</th>
+            <th>{% trans "Quantity" %}</th>
+            <th>{% trans "Unit price" %}</th>
+            <th>{% trans "Total price" %}</th>
+            <th>{% trans "User" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for payment in cashflow_payments %}
+        <tr>
+            <td>{{ payment.service_price.service.name }} ({{ payment.service_price.service.get_kind_display }})</td>
+            <td>{{ payment.amount }}</td>
+            <td>{{ payment.unit_price|price }}</td>
+            <td>{{ payment.total_price|price }}</td>
+            <td>{{ payment.user.get_full_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+

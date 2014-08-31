@@ -90,10 +90,10 @@ class PaymentMode(models.Model):
     KIND_DIRECT = 'direct'
 
     KIND_CHOICES = (
-        (KIND_CASH, _("cash")),
-        (KIND_CHECK, _("check")),
-        (KIND_CARD, _("credit card")),
-        (KIND_DIRECT, _("direct debit")),
+        (KIND_CASH, _("Cash")),
+        (KIND_CHECK, _("Check")),
+        (KIND_CARD, _("Credit card")),
+        (KIND_DIRECT, _("Direct debit")),
     )
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='payment_modes',
@@ -156,3 +156,11 @@ class Payment(models.Model):
 
     def __str__(self):
         return "%s for %s on %s" % (self.service_price.service.name, self.user, self.cashflow)
+
+    @property
+    def unit_price(self):
+        return self.service_price.amount
+
+    @property
+    def total_price(self):
+        return self.amount * self.unit_price

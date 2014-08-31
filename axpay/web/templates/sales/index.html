@@ -1,11 +1,32 @@
 {% extends 'sales/base.html' %}
 
-{% load bootstrap standard_ui i18n %}
+{% load bootstrap standard_ui i18n money %}
 
 {% block content %}
-<h3>{% trans "Sales" %}</h3>
-<ul>
-    <li><a href="{% url 'sales:payment-register' %}">{% trans "Register payment" %}</a></li>
-</ul>
+<h3>{% trans "Last payments" %}</h3>
+<table class="table table-stripped table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>{% trans "Reference" %}</th>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Amount" %}</th>
+            <th>{% trans "Payment mode" %}</th>
+            <th>{% trans "Payer" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cashflow in last_cashflows %}
+        <tr>
+            <td><a href="{% url 'sales:cashflow-detail' cashflow.pk %}">{{ cashflow.payment_mode.reference }}</a></td>
+            <td>{{ cashflow.payment_date }}</td>
+            <td>{{ cashflow.amount|price }}</td>
+            <td>{{ cashflow.payment_mode.get_kind_display }}</td>
+            <td>{{ cashflow.payment_mode.owner.get_full_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'sales:payments' %}">View more...</a>
 {% endblock %}
 

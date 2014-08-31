@@ -5,6 +5,7 @@ import datetime
 
 from django import forms
 from django.contrib import auth
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from axpay.money import models as money_models
@@ -55,6 +56,7 @@ class PaymentRegisterForm(forms.Form):
                 label=service.service,
                 min_value=0,
             )
+            self.initial[key] = 0
         # Force 'amount' at the end
         self.fields['amount'] = self.fields.pop('amount')
 
@@ -69,7 +71,7 @@ class PaymentRegisterForm(forms.Form):
 
         expected_amount = 0
         for field_name, service in self._services_list.items():
-            expected_amount += service.price * cleaned_data.get(field_name, 0)
+            expected_amount += service.amount * cleaned_data.get(field_name, 0)
 
         if expected_amount == 0:
             raise forms.ValidationError(_("A payment must contain at least one service;"))
@@ -91,12 +93,12 @@ class PaymentRegisterForm(forms.Form):
 
         cashflow = money_models.CashFlow.objects.create(
             payment_mode=payment_mode,
-            payment_date=data['payment_date'],
+            payment_date=timezone.now(),
             amount=data['amount'] * 100,
         )
 
         payments = []
-        for field_name, service_price in self._services_list:
+        for field_name, service_price in self._services_list.items():
             service_amount = data[field_name]
             if service_amount > 0:
                 payments.append(money_models.Payment.objects.create(

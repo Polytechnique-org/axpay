@@ -8,5 +8,7 @@ from . import views
 
 urlpatterns = patterns('',
     url(r'^$', views.SalesIndexView.as_view(), name='index'),
+    url(r'^cashflow/(?P<pk>\d+)/$', views.CashFlowDetailView.as_view(), name='cashflow-detail'),
+    url(r'^payments/', views.PaymentListView.as_view(), name='payments'),
     url(r'^payment/register/', views.PaymentRegisterView.as_view(), name='payment-register'),
 )
