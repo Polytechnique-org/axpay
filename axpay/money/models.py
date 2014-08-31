@@ -6,6 +6,7 @@ from __future__ import unicode_literals, print_function
 
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from . import utils
@@ -37,6 +38,21 @@ class Service(models.Model):
         return '%s (%s)' % (self.name, self.get_kind_display())
 
 
+class ServicePriceManager(models.Manager):
+    def available(self, at=None):
+        if at is None:
+            at = timezone.now()
+
+        lower_bound = higher_bound = at
+
+        return self.filter(
+            models.Q(available_since__lte=lower_bound) & (
+                models.Q(available_until__isnull=True)
+                | models.Q(available_until__gte=higher_bound)
+            )
+        )
+
+
 class ServicePrice(models.Model):
     """The price of a service at a given time."""
 
@@ -46,6 +62,8 @@ class ServicePrice(models.Model):
 
     available_since = models.DateTimeField(verbose_name=_("available since"))
     available_until = models.DateTimeField(blank=True, null=True, verbose_name=_("available until"))
+
+    objects = ServicePriceManager()
 
     class Meta:
         verbose_name = _("service price")

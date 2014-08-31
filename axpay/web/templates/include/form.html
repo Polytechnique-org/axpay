@@ -1,0 +1,13 @@
+{% load bootstrap i18n %}
+
+<form method="POST" class="form-horizontal"{% if file_upload %} enctype="multipart/form-data"{% endif %}>
+    {% csrf_token %}
+    {{ form|bootstrap_horizontal }}
+
+    <div class="form-actions col-sm-offset-2">
+        {% if cancel_url %}
+            <a class="btn btn-default" href="{{ cancel_url }}">{% trans "Cancel" %}</a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">{{ submit_text }}</button>
+    </div>
+</form>

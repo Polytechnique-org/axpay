@@ -27,6 +27,10 @@ class DetailView(AXPayMixin, generic.DetailView):
     pass
 
 
+class FormView(AXPayMixin, generic.FormView):
+    pass
+
+
 class IndexView(TemplateView):
     topnav = 'home'
     template_name = 'index.html'
@@ -34,8 +38,6 @@ class IndexView(TemplateView):
 
 class LoginView(generic.TemplateView):
     template_name = 'login.html'
-
-    
 
     def get_context_data(self, **kwargs):
         ctxt = super(LoginView, self).get_context_data(**kwargs)

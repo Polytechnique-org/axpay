@@ -7,11 +7,13 @@ from django.contrib import admin
 admin.autodiscover()
 
 
-from . import views
+from .views import base as base_views
+from .views import sales as sales_views
 
 # Main views
 urlpatterns = patterns('',
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', base_views.IndexView.as_view(), name='index'),
+    url(r'^sales/register/$', sales_views.PaymentRegisterView.as_view(), name='payment-register'),
 )
 
 # Utils
@@ -22,7 +24,7 @@ urlpatterns += patterns('axpay.util.views',
 # Auth
 urlpatterns += patterns('',
     url(r'^xorgauth/', include('django_authgroupex.urls', namespace='authgroupex')),
-    url(r'^login/$', views.LoginView.as_view(), name='login'),
+    url(r'^login/$', base_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'},
         name='logout'),
 )
