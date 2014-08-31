@@ -142,6 +142,7 @@ class Payment(models.Model):
         verbose_name=_("user"), help_text=_("user for whom the service was bought"))
     service_price = models.ForeignKey(ServicePrice, related_name='payments',
         verbose_name=_("service price"))
+    amount = models.PositiveIntegerField(verbose_name=_("amount"))
     cashflow = models.ForeignKey(CashFlow, related_name='payments',
         verbose_name=_("cashflow"))
 
