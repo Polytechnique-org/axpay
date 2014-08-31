@@ -15,46 +15,46 @@ from django.utils import timezone
 from . import models
 
 
-class AllServicesFactory(factory.Factory):
+class AllProductsFactory(factory.Factory):
     class Meta:
-        model = models.Service
+        model = models.Product
 
     items = [
-        (models.Service.KIND_STANDARD_SUBSCRIPTION, "Cotisation"),
-        (models.Service.KIND_JR_SUBSCRIPTION, "Cotisation J&R X"),
-        (models.Service.KIND_JR_SUBSCRIPTION, "Cotisation J&R externe"),
-        (models.Service.KIND_COUPLE_SUBSCRIPTION, "Cotisation conjoint"),
-        (models.Service.KIND_LIFETIME_SUBSCRIPTION, "Cotisation à vie"),
+        (models.Product.KIND_STANDARD_SUBSCRIPTION, "Cotisation"),
+        (models.Product.KIND_JR_SUBSCRIPTION, "Cotisation J&R X"),
+        (models.Product.KIND_JR_SUBSCRIPTION, "Cotisation J&R externe"),
+        (models.Product.KIND_COUPLE_SUBSCRIPTION, "Cotisation conjoint"),
+        (models.Product.KIND_LIFETIME_SUBSCRIPTION, "Cotisation à vie"),
     ]
 
     @classmethod
     def _create(cls, target_class, items):  # pylint: disable=arguments-differ
-        services = []
+        products = []
         for kind, name in items:
-            service, _created = target_class.objects.get_or_create(
+            product, _created = target_class.objects.get_or_create(
                 name=name,
                 defaults={'kind': kind},
             )
-            services.append(service)
-        return services
+            products.append(product)
+        return products
 
 
 class AllPricesFactory(factory.Factory):
     class Meta:
-        model = models.ServicePrice
+        model = models.ProductPrice
 
-    services = factory.SubFactory(AllServicesFactory)
+    products = factory.SubFactory(AllProductsFactory)
     available_since = factory.LazyAttribute(
         lambda _o: timezone.now().replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0))
     available_until = None
     amount = 4200  # 42€
 
     @classmethod
-    def _create(cls, target_class, services, available_since, available_until, amount):  # pylint: disable=arguments-differ
+    def _create(cls, target_class, products, available_since, available_until, amount):  # pylint: disable=arguments-differ
         prices = []
-        for service in services:
+        for product in products:
             price, _created = target_class.objects.get_or_create(
-                service=service,
+                product=product,
                 available_since=available_since,
                 available_until=available_until,
                 defaults={'amount': amount},
@@ -76,16 +76,16 @@ class ExamplePaymentOwnerFactory(factory.django.DjangoModelFactory):
 class ExamplePaymentFactory(factory.Factory):
     class Meta:
         model = models.Payment
-        exclude = ['items', 'service_prices']
+        exclude = ['items', 'product_prices']
 
     owner = factory.SubFactory(ExamplePaymentOwnerFactory)
 
-    items = [models.Service.KIND_STANDARD_SUBSCRIPTION]
+    items = [models.Product.KIND_STANDARD_SUBSCRIPTION]
     nb_payments = 1
     payment_kind = models.PaymentMode.KIND_CASH
     latest_payment = factory.LazyAttribute(lambda _o: timezone.now())
     ref_date = factory.LazyAttribute(lambda o: o.latest_payment - datetime.timedelta(days=365 * o.nb_payments))
-    service_prices = factory.LazyAttribute(lambda _o: models.ServicePrice.objects.all())
+    product_prices = factory.LazyAttribute(lambda _o: models.ProductPrice.objects.all())
 
     @classmethod
     def _setup_next_sequence(cls):
@@ -103,37 +103,37 @@ class ExamplePaymentFactory(factory.Factory):
         return '%s%08d' % (prefixes[self.payment_kind], n)
 
     @factory.lazy_attribute
-    def selected_service_prices(self):
-        service_prices = {}
-        for price in self.service_prices:
-            service_prices[price.service.kind] = price
+    def selected_product_prices(self):
+        product_prices = {}
+        for price in self.product_prices:
+            product_prices[price.product.kind] = price
 
-        return [service_prices[item] for item in self.items]
+        return [product_prices[item] for item in self.items]
 
     @classmethod
     def _create(cls, target_class,
-            selected_service_prices, nb_payments, payment_kind,
+            selected_product_prices, nb_payments, payment_kind,
             latest_payment, ref_date, owner, reference):
 
         payments = []
-        aggregated_service_prices = collections.Counter(selected_service_prices)
+        aggregated_product_prices = collections.Counter(selected_product_prices)
 
         payment_mode = models.PaymentMode.objects.create(
             kind=payment_kind,
             owner=owner,
             reference=reference,
         )
-        services_total = sum(sp.amount for sp in selected_service_prices)
+        products_total = sum(sp.amount for sp in selected_product_prices)
         for i in range(nb_payments):
             cashflow = models.CashFlow.objects.create(
                 payment_mode=payment_mode,
                 payment_date=ref_date + i * datetime.timedelta(days=365),
-                amount=services_total,
+                amount=products_total,
             )
-            for sp, amount in aggregated_service_prices.items():
+            for sp, amount in aggregated_product_prices.items():
                 payment = target_class.objects.create(
                     user=payment_mode.owner,
-                    service_price=sp,
+                    product_price=sp,
                     amount=amount,
                     cashflow=cashflow,
                     billing_date=cashflow.payment_date.date(),
@@ -150,28 +150,28 @@ class ExamplePaymentsFactory(factory.Factory):
 
     payments = factory.List([
         factory.SubFactory(ExamplePaymentFactory,
-            service_prices=factory.SelfAttribute('...prices'),
-            items=[models.Service.KIND_STANDARD_SUBSCRIPTION],
+            product_prices=factory.SelfAttribute('...prices'),
+            items=[models.Product.KIND_STANDARD_SUBSCRIPTION],
             payment_kind=models.PaymentMode.KIND_CASH,
         ),
         factory.SubFactory(ExamplePaymentFactory,
-            service_prices=factory.SelfAttribute('...prices'),
-            items=[models.Service.KIND_STANDARD_SUBSCRIPTION, models.Service.KIND_COUPLE_SUBSCRIPTION],
+            product_prices=factory.SelfAttribute('...prices'),
+            items=[models.Product.KIND_STANDARD_SUBSCRIPTION, models.Product.KIND_COUPLE_SUBSCRIPTION],
             payment_kind=models.PaymentMode.KIND_CHECK,
         ),
         factory.SubFactory(ExamplePaymentFactory,
-            service_prices=factory.SelfAttribute('...prices'),
-            items=[models.Service.KIND_STANDARD_SUBSCRIPTION],
+            product_prices=factory.SelfAttribute('...prices'),
+            items=[models.Product.KIND_STANDARD_SUBSCRIPTION],
             nb_payments=3,
             payment_kind=models.PaymentMode.KIND_CARD,
         ),
         factory.SubFactory(ExamplePaymentFactory,
-            service_prices=factory.SelfAttribute('...prices'),
+            product_prices=factory.SelfAttribute('...prices'),
             items=[
-                models.Service.KIND_STANDARD_SUBSCRIPTION,
-                models.Service.KIND_COUPLE_SUBSCRIPTION,
-                models.Service.KIND_JR_SUBSCRIPTION,
-                models.Service.KIND_JR_SUBSCRIPTION,
+                models.Product.KIND_STANDARD_SUBSCRIPTION,
+                models.Product.KIND_COUPLE_SUBSCRIPTION,
+                models.Product.KIND_JR_SUBSCRIPTION,
+                models.Product.KIND_JR_SUBSCRIPTION,
             ],
             nb_payments=4,
             payment_kind=models.PaymentMode.KIND_DIRECT,

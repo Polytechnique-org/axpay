@@ -12,8 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 from . import utils
 
 
-class Service(models.Model):
-    """A base service."""
+class Product(models.Model):
+    """A base product."""
 
     KIND_STANDARD_SUBSCRIPTION = 'std'
     KIND_JR_SUBSCRIPTION = 'j-r'
@@ -31,14 +31,14 @@ class Service(models.Model):
     name = models.CharField(max_length=32, unique=True, verbose_name=_("name"))
 
     class Meta:
-        verbose_name = _("service")
-        verbose_name_plural = _("services")
+        verbose_name = _("product")
+        verbose_name_plural = _("products")
 
     def __str__(self):
         return '%s (%s)' % (self.name, self.get_kind_display())
 
 
-class ServicePriceManager(models.Manager):
+class ProductPriceManager(models.Manager):
     def available(self, at=None):
         if at is None:
             at = timezone.now()
@@ -53,25 +53,25 @@ class ServicePriceManager(models.Manager):
         )
 
 
-class ServicePrice(models.Model):
-    """The price of a service at a given time."""
+class ProductPrice(models.Model):
+    """The price of a product at a given time."""
 
-    service = models.ForeignKey(Service, related_name='prices', verbose_name=_("service"))
+    product = models.ForeignKey(Product, related_name='prices', verbose_name=_("product"))
     amount = models.IntegerField(verbose_name=_("amount"),
         help_text=_("actual price, in euro cents"))
 
     available_since = models.DateTimeField(verbose_name=_("available since"))
     available_until = models.DateTimeField(blank=True, null=True, verbose_name=_("available until"))
 
-    objects = ServicePriceManager()
+    objects = ProductPriceManager()
 
     class Meta:
-        verbose_name = _("service price")
-        verbose_name_plural = _("service prices")
+        verbose_name = _("product price")
+        verbose_name_plural = _("product prices")
 
     def __str__(self):
         return "%s: %s (from %s to %s)" % (
-            self.service.name,
+            self.product.name,
             utils.currency(self.amount),
             self.available_since,
             self.available_until or 'forever',
@@ -114,7 +114,7 @@ class PaymentMode(models.Model):
 class CashFlow(models.Model):
     """Some money movement.
 
-    One single CashFlow may be used to pay for several services.
+    One single CashFlow may be used to pay for several products.
     """
 
     payment_mode = models.ForeignKey(PaymentMode, related_name='cashflows',
@@ -139,27 +139,27 @@ class Payment(models.Model):
     """A payment action."""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='payments',
-        verbose_name=_("user"), help_text=_("user for whom the service was bought"))
-    service_price = models.ForeignKey(ServicePrice, related_name='payments',
-        verbose_name=_("service price"))
+        verbose_name=_("user"), help_text=_("user for whom the product was bought"))
+    product_price = models.ForeignKey(ProductPrice, related_name='payments',
+        verbose_name=_("product price"))
     amount = models.PositiveIntegerField(verbose_name=_("amount"))
     cashflow = models.ForeignKey(CashFlow, related_name='payments',
         verbose_name=_("cashflow"))
 
     billing_date = models.DateField(verbose_name=_("billing date"),
-        help_text=_("date at which the paid service should be activated"))
+        help_text=_("date at which the paid product should be activated"))
 
     class Meta:
-        unique_together = ('user', 'service_price', 'cashflow')
+        unique_together = ('user', 'product_price', 'cashflow')
         verbose_name = _("payment")
         verbose_name_plural = _("payments")
 
     def __str__(self):
-        return "%s for %s on %s" % (self.service_price.service.name, self.user, self.cashflow)
+        return "%s for %s on %s" % (self.product_price.product.name, self.user, self.cashflow)
 
     @property
     def unit_price(self):
-        return self.service_price.amount
+        return self.product_price.amount
 
     @property
     def total_price(self):

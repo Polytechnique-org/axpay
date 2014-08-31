@@ -41,12 +41,12 @@ msgid "name"
 msgstr "nom"
 
 #: money/models.py:34 money/models.py:59
-msgid "service"
-msgstr "service"
+msgid "product"
+msgstr "produit"
 
 #: money/models.py:35
-msgid "services"
-msgstr "services"
+msgid "products"
+msgstr "produits"
 
 #: money/models.py:60 money/models.py:124 money/models.py:145
 msgid "amount"
@@ -65,12 +65,12 @@ msgid "available until"
 msgstr "disponible jusque"
 
 #: money/models.py:69 money/models.py:144
-msgid "service price"
-msgstr "prix d'un service"
+msgid "product price"
+msgstr "prix d'un produit"
 
 #: money/models.py:70
-msgid "service prices"
-msgstr "prix de services"
+msgid "product prices"
+msgstr "prix des produits"
 
 #: money/models.py:93
 msgid "Cash"
@@ -125,16 +125,16 @@ msgid "user"
 msgstr "utilisateur"
 
 #: money/models.py:142
-msgid "user for whom the service was bought"
-msgstr "utilisateur bénéficiant du service acheté"
+msgid "user for whom the product was bought"
+msgstr "utilisateur bénéficiant du produit acheté"
 
 #: money/models.py:149
 msgid "billing date"
 msgstr "date de facturation"
 
 #: money/models.py:150
-msgid "date at which the paid service should be activated"
-msgstr "date d'activation du service acheté"
+msgid "date at which the paid product should be activated"
+msgstr "date d'activation du produit acheté"
 
 #: money/models.py:154
 msgid "payment"
@@ -171,8 +171,8 @@ msgid "A payment with reference %s already exists."
 msgstr "Un paiement existe déjà pour la référence %s."
 
 #: sales/forms.py:77
-msgid "A payment must contain at least one service."
-msgstr "Un paiment doit couvrir au moint un service."
+msgid "A payment must contain at least one product."
+msgstr "Un paiment doit couvrir au moint un produit."
 
 #: sales/forms.py:80
 #, python-format
@@ -269,8 +269,8 @@ msgid "Amount"
 msgstr "Montant"
 
 #: web/templates/sales/cashflow_detail.html:19
-msgid "Service"
-msgstr "Service"
+msgid "Product"
+msgstr "Produit"
 
 #: web/templates/sales/cashflow_detail.html:20
 msgid "Quantity"

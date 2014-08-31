@@ -45,15 +45,15 @@ class PaymentRegisterForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        services = kwargs.pop('services')
+        products = kwargs.pop('products')
         super(PaymentRegisterForm, self).__init__(*args, **kwargs)
 
-        self._services_list = {}
-        for service in services:
-            key = 'service_%s' % service.pk
-            self._services_list[key] = service
+        self._products_list = {}
+        for product in products:
+            key = 'product_%s' % product.pk
+            self._products_list[key] = product
             self.fields[key] = forms.IntegerField(
-                label=service.service,
+                label=product.product,
                 min_value=0,
             )
             self.initial[key] = 0
@@ -70,11 +70,11 @@ class PaymentRegisterForm(forms.Form):
         cleaned_data = super(PaymentRegisterForm, self).clean()
 
         expected_amount = 0
-        for field_name, service in self._services_list.items():
-            expected_amount += service.amount * cleaned_data.get(field_name, 0)
+        for field_name, product in self._products_list.items():
+            expected_amount += product.amount * cleaned_data.get(field_name, 0)
 
         if expected_amount == 0:
-            raise forms.ValidationError(_("A payment must contain at least one service;"))
+            raise forms.ValidationError(_("A payment must contain at least one product;"))
 
         if cleaned_data.get('amount', 0) * 100 != expected_amount:
             self._errors['amount'] = self.error_class([_("The amount is invalid, expected %s€") % money_utils.currency(expected_amount)])
@@ -98,13 +98,13 @@ class PaymentRegisterForm(forms.Form):
         )
 
         payments = []
-        for field_name, service_price in self._services_list.items():
-            service_amount = data[field_name]
-            if service_amount > 0:
+        for field_name, product_price in self._products_list.items():
+            product_amount = data[field_name]
+            if product_amount > 0:
                 payments.append(money_models.Payment.objects.create(
                     user=owner,
-                    service_price=service_price,
-                    amount=service_amount,
+                    product_price=product_price,
+                    amount=product_amount,
                     cashflow=cashflow,
                     billing_date=data['payment_date'],
                 ))

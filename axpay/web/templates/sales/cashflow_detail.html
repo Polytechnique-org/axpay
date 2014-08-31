@@ -16,7 +16,7 @@
 <table class="table table-stripped table-hover table-condensed">
     <thead>
         <tr>
-            <th>{% trans "Service" %}</th>
+            <th>{% trans "Product" %}</th>
             <th>{% trans "Quantity" %}</th>
             <th>{% trans "Unit price" %}</th>
             <th>{% trans "Total price" %}</th>
@@ -26,7 +26,7 @@
     <tbody>
         {% for payment in cashflow_payments %}
         <tr>
-            <td>{{ payment.service_price.service.name }} ({{ payment.service_price.service.get_kind_display }})</td>
+            <td>{{ payment.product_price.product.name }} ({{ payment.product_price.product.get_kind_display }})</td>
             <td>{{ payment.amount }}</td>
             <td>{{ payment.unit_price|price }}</td>
             <td>{{ payment.total_price|price }}</td>

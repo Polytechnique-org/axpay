@@ -9,21 +9,21 @@ from django.contrib import admin
 from . import models
 
 
-class ServiceAdmin(admin.ModelAdmin):
+class ProductAdmin(admin.ModelAdmin):
     list_display = ['kind', 'name']
     search_fields = ['kind', 'name']
     list_filter = ['kind']
 
-admin.site.register(models.Service, ServiceAdmin)
+admin.site.register(models.Product, ProductAdmin)
 
 
-class ServicePriceAdmin(admin.ModelAdmin):
-    list_display = ['service', 'amount', 'available_since', 'available_until']
-    search_fields = ['service__kind', 'service__name']
-    list_filter = ['service', 'available_since', 'available_until']
+class ProductPriceAdmin(admin.ModelAdmin):
+    list_display = ['product', 'amount', 'available_since', 'available_until']
+    search_fields = ['product__kind', 'product__name']
+    list_filter = ['product', 'available_since', 'available_until']
     date_hierarchy = 'available_since'
 
-admin.site.register(models.ServicePrice, ServicePriceAdmin)
+admin.site.register(models.ProductPrice, ProductPriceAdmin)
 
 
 class PaymentModeAdmin(admin.ModelAdmin):
@@ -44,10 +44,10 @@ admin.site.register(models.CashFlow, CashFlowAdmin)
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ['service_price', 'cashflow', 'user', 'billing_date']
-    list_filter = ['service_price__service', 'service_price', 'cashflow__payment_mode__kind', 'billing_date']
+    list_display = ['product_price', 'cashflow', 'user', 'billing_date']
+    list_filter = ['product_price__product', 'product_price', 'cashflow__payment_mode__kind', 'billing_date']
     search_fields = [
-        'service_price__service__name', 'service_price__service__kind',
+        'product_price__product__name', 'product_price__product__kind',
         'user__first_name', 'user__last_name',
         'cashflow__payment_mode__owner__first_name', 'cashflow__payment_mode__owner__last_name',
     ]

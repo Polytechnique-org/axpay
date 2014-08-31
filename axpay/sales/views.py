@@ -46,10 +46,10 @@ class PaymentRegisterView(generic.FormView):
     success_url = 'sales:cashflow-detail'
 
     def get_form_kwargs(self):
-        """Override the default kwargs to add our list of available services."""
+        """Override the default kwargs to add our list of available products."""
         kwargs = super(PaymentRegisterView, self).get_form_kwargs()
         kwargs.update(
-            services=money_models.ServicePrice.objects.available().order_by('service__name'),
+            products=money_models.ProductPrice.objects.available().order_by('product__name'),
         )
         return kwargs
 
@@ -78,7 +78,7 @@ class CashFlowDetailView(generic.DetailView):
         ctxt = super(CashFlowDetailView, self).get_context_data(**kwargs)
         cashflow = ctxt['cashflow']
         cashflow_payments = cashflow.payments.select_related(
-            'service_price__service',
+            'product_price__product',
             'user',
         )
         ctxt.update(
