@@ -111,21 +111,21 @@ class PaymentMode(models.Model):
             self.reference, self.get_kind_display(), self.owner.get_full_name() or self.owner.username)
 
 
-class CashFlow(models.Model):
-    """Some money movement.
+class Order(models.Model):
+    """Pay for a set of products on a PaymentMode
 
-    One single CashFlow may be used to pay for several products.
+    One single Order may be used to pay for several products.
     """
 
-    payment_mode = models.ForeignKey(PaymentMode, related_name='cashflows',
+    payment_mode = models.ForeignKey(PaymentMode, related_name='orders',
         verbose_name=_("payment mode"))
     payment_date = models.DateTimeField(verbose_name=_("payment date"),
         help_text=_("time at which the payment was confirmed"))
     amount = models.IntegerField(verbose_name=_("amount"), help_text=_("actual price, in euro cents"))
 
     class Meta:
-        verbose_name = _("cashflow")
-        verbose_name_plural = _("cashflows")
+        verbose_name = _("order")
+        verbose_name_plural = _("orders")
 
     def __str__(self):
         return "%s on %s at %s" % (
@@ -143,19 +143,19 @@ class Payment(models.Model):
     product_price = models.ForeignKey(ProductPrice, related_name='payments',
         verbose_name=_("product price"))
     amount = models.PositiveIntegerField(verbose_name=_("amount"))
-    cashflow = models.ForeignKey(CashFlow, related_name='payments',
-        verbose_name=_("cashflow"))
+    order = models.ForeignKey(Order, related_name='payments',
+        verbose_name=_("order"))
 
     billing_date = models.DateField(verbose_name=_("billing date"),
         help_text=_("date at which the paid product should be activated"))
 
     class Meta:
-        unique_together = ('user', 'product_price', 'cashflow')
+        unique_together = ('user', 'product_price', 'order')
         verbose_name = _("payment")
         verbose_name_plural = _("payments")
 
     def __str__(self):
-        return "%s for %s on %s" % (self.product_price.product.name, self.user, self.cashflow)
+        return "%s for %s on %s" % (self.product_price.product.name, self.user, self.order)
 
     @property
     def unit_price(self):

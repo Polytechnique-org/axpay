@@ -91,7 +91,7 @@ class PaymentRegisterForm(forms.Form):
             reference=data['payment_mode_reference'],
         )
 
-        cashflow = money_models.CashFlow.objects.create(
+        order = money_models.Order.objects.create(
             payment_mode=payment_mode,
             payment_date=timezone.now(),
             amount=data['amount'] * 100,
@@ -105,13 +105,13 @@ class PaymentRegisterForm(forms.Form):
                     user=owner,
                     product_price=product_price,
                     amount=product_amount,
-                    cashflow=cashflow,
+                    order=order,
                     billing_date=data['payment_date'],
                 ))
 
         return {
             'owner': owner,
             'payment_mode': payment_mode,
-            'cashflow': cashflow,
+            'order': order,
             'payments': payments,
         }

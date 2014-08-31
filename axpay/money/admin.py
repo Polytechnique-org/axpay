@@ -34,22 +34,22 @@ class PaymentModeAdmin(admin.ModelAdmin):
 admin.site.register(models.PaymentMode, PaymentModeAdmin)
 
 
-class CashFlowAdmin(admin.ModelAdmin):
+class OrderAdmin(admin.ModelAdmin):
     list_display = ['payment_mode', 'payment_date', 'amount']
     search_fields = ['payment_mode__owner__first_name', 'payment_mode__owner__last_name']
     list_filter = ['payment_mode__kind', 'payment_date']
     date_hierarchy = 'payment_date'
 
-admin.site.register(models.CashFlow, CashFlowAdmin)
+admin.site.register(models.Order, OrderAdmin)
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ['product_price', 'cashflow', 'user', 'billing_date']
-    list_filter = ['product_price__product', 'product_price', 'cashflow__payment_mode__kind', 'billing_date']
+    list_display = ['product_price', 'order', 'user', 'billing_date']
+    list_filter = ['product_price__product', 'product_price', 'order__payment_mode__kind', 'billing_date']
     search_fields = [
         'product_price__product__name', 'product_price__product__kind',
         'user__first_name', 'user__last_name',
-        'cashflow__payment_mode__owner__first_name', 'cashflow__payment_mode__owner__last_name',
+        'order__payment_mode__owner__first_name', 'order__payment_mode__owner__last_name',
     ]
     date_hierarchy = 'billing_date'
 

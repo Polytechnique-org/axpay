@@ -23,7 +23,7 @@ class SalesIndexView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         ctxt = super(SalesIndexView, self).get_context_data(**kwargs)
-        cashflows = (money_models.CashFlow.objects
+        orders = (money_models.Order.objects
             .order_by('-payment_date')
             .select_related(
                 'payment_mode__owner',
@@ -31,7 +31,7 @@ class SalesIndexView(generic.TemplateView):
             )[:10]
 
         ctxt.update(
-            last_cashflows=cashflows,
+            last_orders=orders,
         )
         return ctxt
 
@@ -43,7 +43,7 @@ class PaymentRegisterView(generic.FormView):
     form_class = forms.PaymentRegisterForm
     template_name = 'sales/payment_register.html'
 
-    success_url = 'sales:cashflow-detail'
+    success_url = 'sales:order-detail'
 
     def get_form_kwargs(self):
         """Override the default kwargs to add our list of available products."""
@@ -55,33 +55,33 @@ class PaymentRegisterView(generic.FormView):
 
     def form_valid(self, form):
         data = form.save()
-        self._cashflow = data['cashflow']
+        self._order = data['order']
         return super(PaymentRegisterView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse(self.success_url, kwargs={'pk': self._cashflow.pk})
+        return reverse(self.success_url, kwargs={'pk': self._order.pk})
 
 
 class PaymentListView(generic.TemplateView):
     pass
 
 
-class CashFlowDetailView(generic.DetailView):
+class OrderDetailView(generic.DetailView):
     topnav = 'sales'
-    sidenav = 'cashflows'
+    sidenav = 'orders'
 
-    model = money_models.CashFlow
-    context_object_name = 'cashflow'
-    template_name = 'sales/cashflow_detail.html'
+    model = money_models.Order
+    context_object_name = 'order'
+    template_name = 'sales/order_detail.html'
 
     def get_context_data(self, **kwargs):
-        ctxt = super(CashFlowDetailView, self).get_context_data(**kwargs)
-        cashflow = ctxt['cashflow']
-        cashflow_payments = cashflow.payments.select_related(
+        ctxt = super(OrderDetailView, self).get_context_data(**kwargs)
+        order = ctxt['order']
+        order_payments = order.payments.select_related(
             'product_price__product',
             'user',
         )
         ctxt.update(
-            cashflow_payments=cashflow_payments,
+            order_payments=order_payments,
         )
         return ctxt

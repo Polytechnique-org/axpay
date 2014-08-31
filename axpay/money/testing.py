@@ -125,7 +125,7 @@ class ExamplePaymentFactory(factory.Factory):
         )
         products_total = sum(sp.amount for sp in selected_product_prices)
         for i in range(nb_payments):
-            cashflow = models.CashFlow.objects.create(
+            order = models.Order.objects.create(
                 payment_mode=payment_mode,
                 payment_date=ref_date + i * datetime.timedelta(days=365),
                 amount=products_total,
@@ -135,8 +135,8 @@ class ExamplePaymentFactory(factory.Factory):
                     user=payment_mode.owner,
                     product_price=sp,
                     amount=amount,
-                    cashflow=cashflow,
-                    billing_date=cashflow.payment_date.date(),
+                    order=order,
+                    billing_date=order.payment_date.date(),
                 )
                 payments.append(payment)
         return payments

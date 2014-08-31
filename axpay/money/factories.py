@@ -43,9 +43,9 @@ class PaymentModeFactory(factory.django.DjangoModelFactory):
     reference = factory.Sequence(lambda n: "42-42-%12d" % n)
 
 
-class CashFlowFactory(factory.django.DjangoModelFactory):
+class OrderFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = models.CashFlow
+        model = models.Order
 
     payment_mode = factory.SubFactory(PaymentModeFactory)
     payment_date = factory.LazyAttribute(lambda _o: timezone.now())
@@ -58,8 +58,8 @@ class PaymentFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(auth_factories.UserF)
     product_price = models.SubFactory(ProductPriceFactory)
-    cashflow = models.SubFactory(CashFlowFactory,
-        # Forward '.user' to the cashflow.payment_mode.owner
+    order = models.SubFactory(OrderFactory,
+        # Forward '.user' to the order.payment_mode.owner
         payment_mode__owner=factory.SelfAttribute('...user'),
     )
 
