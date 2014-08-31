@@ -48,7 +48,7 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'bootstrapform',  # For pretty forms
+    'bootstrap3',  # For pretty forms too
 )
 
 CORE_APPS = (
@@ -291,3 +291,10 @@ TEMPLATE_STRING_IF_INVALID = '<InvalidVar %s>'
 # ==================
 
 CONFTOOLS_CONFIG = config
+
+# Bootstrap3
+# ==========
+
+BOOTSTRAP3 = {
+    'set_placeholder': False,
+}

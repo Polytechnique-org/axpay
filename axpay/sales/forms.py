@@ -5,6 +5,7 @@ import datetime
 
 from django import forms
 from django.contrib import auth
+from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -115,3 +116,50 @@ class OrderRegisterForm(forms.Form):
             'order': order,
             'contents': order_contents,
         }
+
+
+class OrderFilterForm(forms.Form):
+    placeholders = {
+        'user_search': _("user"),
+        'payment_mode_kind': _("payment kind"),
+    }
+
+    user_search = forms.CharField(
+        label=_("Payer name"),
+        required=False,
+        initial='',
+    )
+    payment_mode_kind = forms.ChoiceField(
+        label=_("Payment mode kind"),
+        choices=[('', _("(Any payment kind)"))] + list(money_models.PaymentMode.KIND_CHOICES),
+        initial='',
+        required=False,
+    )
+    product = forms.ModelChoiceField(
+        label=_("Contains product"),
+        queryset=money_models.Product.objects,
+        empty_label=_("(Any product)"),
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(OrderFilterForm, self).__init__(*args, **kwargs)
+        for field_name, placeholder in self.placeholders.items():
+            self.fields[field_name].widget.attrs['placeholder'] = placeholder
+
+    def filter(self, qs, initial=True):
+        data = getattr(self, 'cleaned_data', {})
+
+        if data.get('payment_mode_kind'):
+            qs = qs.filter(payment_mode__kind=data['payment_mode_kind'])
+        if data.get('product'):
+            qs = qs.filter(items__product_price__product=data['product'])
+        if data.get('user_search'):
+            lookup = data['user_search']
+            qs = qs.filter(
+                models.Q(payment_mode__owner__username__icontains=lookup)
+                | models.Q(payment_mode__owner__first_name__icontains=lookup)
+                | models.Q(payment_mode__owner__last_name__icontains=lookup)
+            )
+
+        return qs.distinct()

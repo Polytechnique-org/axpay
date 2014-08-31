@@ -3,6 +3,7 @@
 
 
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.db import models
 
 from axpay.money import models as money_models
 from axpay.web.views import generic
@@ -23,14 +24,27 @@ class SalesIndexView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         ctxt = super(SalesIndexView, self).get_context_data(**kwargs)
+
+        prices = (money_models.ProductPrice.objects
+            .available()
+            .order_by('product__name')
+            .select_related(
+                'product',
+            )
+        )
+
         orders = (money_models.Order.objects
             .order_by('-payment_date')
             .select_related(
                 'payment_mode__owner',
             )
-            )[:10]
+            .annotate(
+                nb_items=models.Count('items'),
+            )
+        )[:10]
 
         ctxt.update(
+            prices=prices,
             last_orders=orders,
         )
         return ctxt
@@ -62,8 +76,29 @@ class OrderRegisterView(generic.FormView):
         return reverse(self.success_url, kwargs={'pk': self._order.pk})
 
 
-class OrderListView(generic.TemplateView):
-    pass
+class OrderListView(generic.FilterListView):
+
+    # Global
+    topnav = 'sales'
+    sidenav = 'orders'
+
+    # Form
+    form_class = forms.OrderFilterForm
+
+    # Template
+    context_object_name = 'orders'
+    template_name = 'sales/order_list.html'
+
+    # List
+    model = money_models.Order
+    select_related = (
+        'payment_mode__owner',
+    )
+
+    def prepare_queryset(self, qs):
+        return qs.annotate(
+            nb_items=models.Count('items'),
+        )
 
 
 class OrderDetailView(generic.DetailView):

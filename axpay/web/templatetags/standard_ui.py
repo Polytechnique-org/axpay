@@ -22,3 +22,16 @@ def post_form(form, submit_text=_("Submit"), cancel_url=None, file_upload=False)
         'cancel_url': cancel_url,
         'file_upload': file_upload,
     }
+
+@register.inclusion_tag('include/filter_form.html')
+def filter_form(form, submit_text=_("Filter"), form_title=_("Filtering")):
+    """Render a GET filtering form.
+    
+    Usage:
+        {% filter_form form submit_text=_("Search") %}
+    """
+    return {
+        'form': form,
+        'form_title': form_title,
+        'submit_text': submit_text,
+    }
