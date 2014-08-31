@@ -9,6 +9,15 @@ from django.contrib import admin
 from . import models
 
 
+class ContributorProfileAdmin(admin.ModelAdmin):
+    list_display = ['contributor', 'has_lifetime_contribution',
+        'contributions_payed_until', 'jr_subscribed_until']
+    search_fields = ['contributor__username', 'contributor__first_name', 'contributor__last_name']
+    list_filter = ['has_lifetime_contribution', 'contributions_payed_until', 'jr_subscribed_until']
+
+admin.site.register(models.ContributorProfile, ContributorProfileAdmin)
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['kind', 'name']
     search_fields = ['kind', 'name']

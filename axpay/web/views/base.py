@@ -19,6 +19,8 @@ class IndexView(generic.TemplateView):
         ctxt.update(
             orders=money_models.Order.objects.count(),
             sold=money_models.Order.objects.all().aggregate(total_amount=models.Sum('amount'))['total_amount'],
+            active_contributors=money_models.ContributorProfile.objects.up_to_date().count(),
+            jr_subscribed=money_models.ContributorProfile.objects.jr_subscribed().count()
         )
         return ctxt
 

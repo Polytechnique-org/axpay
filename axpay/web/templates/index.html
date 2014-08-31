@@ -13,8 +13,12 @@
             <td><span class="label label-info">{{ sold|price }}</span></td>
         </tr>
         <tr>
-            <th>{% trans "Paid" %}</th>
-            <td><span class="label label-success">{{ paid|price }}</span></td>
+            <th>{% trans "Up to date contributors" %}</th>
+            <td><span class="label label-success">{{ active_contributors }}</span></td>
+        </tr>
+        <tr>
+            <th>{% trans "J&R subscribers" %}</th>
+            <td><span class="label label-success">{{ jr_subscribed }}</span></td>
         </tr>
     </table>
 </div>

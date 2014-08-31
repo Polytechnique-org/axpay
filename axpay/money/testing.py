@@ -164,6 +164,7 @@ class ExampleOrdersFactory(factory.Factory):
             items=[models.Product.KIND_STANDARD_SUBSCRIPTION],
             nb_orders=3,
             payment_kind=models.PaymentMode.KIND_CARD,
+            ref_date=factory.LazyAttribute(lambda _o: timezone.now() - datetime.timedelta(days=600)),
         ),
         factory.SubFactory(ExampleOrderFactory,
             product_prices=factory.SelfAttribute('...prices'),

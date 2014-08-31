@@ -14,6 +14,102 @@ from django.utils.translation import ugettext_lazy as _
 from . import utils
 
 
+class ContributorProfileManager(models.Manager):
+    def up_to_date(self, at=None):
+        if at is None:
+            at = timezone.now()
+        return (self
+            .filter(
+                models.Q(contributions_payed_until__gte=at.date())
+                | models.Q(has_lifetime_contribution=True)
+            )
+            .distinct()
+        )
+
+    def jr_subscribed(self, at=None):
+        if at is None:
+            at = timezone.now()
+        return self.filter(jr_subscribed_until__gte=at.date())
+
+
+class ContributorProfile(models.Model):
+    """Extra data about a contributor."""
+
+    contributor = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='contributor_profile',
+        verbose_name=_("contributor"))
+
+    contributions_payed_until = models.DateField(blank=True, null=True, db_index=True,
+        verbose_name=_("contributions payed until"))
+    jr_subscribed_until = models.DateField(blank=True, null=True, db_index=True,
+        verbose_name=_("subscribed to J&R until"))
+    has_lifetime_contribution = models.BooleanField(default=False, db_index=True,
+        verbose_name=_("lifetime contribution"))
+
+    objects = ContributorProfileManager()
+
+    class Meta:
+        verbose_name = _("contributor profile")
+        verbose_name_plural = _("contributor profiles")
+
+    def __str__(self):
+        return self.contributor.get_full_name()
+
+    def up_to_date(self, at):
+        if at is None:
+            at = timezone.now()
+        return (self.has_lifetime_contribution
+            or (self.contributions_payed_until is not None
+                and self.contributions_payed_until >= at.date()
+            )
+        )
+
+    def jr_subscribed(self, at):
+        if at is None:
+            at = timezone.now()
+        return (self.jr_subscribed_until is not None
+                and self.jr_subscribed_until >= at.date())
+
+
+def get_expiry_date(billing_date, jr=False):
+    if billing_date is None:
+        return billing_date
+    return datetime.date(year=billing_date.year + 1, month=1, day=1)
+
+
+def recompute_profile(user):
+    try:
+        profile = user.contributor_profile
+    except ContributorProfile.DoesNotExist:
+        profile = ContributorProfile.objects.create(contributor=user)
+
+    try:
+        latest_contribution_date = (user.ordered_items
+            .filter(product_price__product__kind__in=Product.VALID_CONTRIBUTION_KINDS)
+            .latest('billing_date')
+        ).billing_date
+    except OrderItem.DoesNotExist:
+        latest_contribution_date = None
+
+    lifetime_contribution = (user.ordered_items
+        .filter(product_price__product__kind__in=Product.FORLIFE_CONTRIBUTION_KINDS)
+        .exists()
+    )
+
+    try:
+        latest_jr_subscription_date = (user.ordered_items
+            .filter(product_price__product__kind__in=Product.JR_SUBSCRIBED_KINDS)
+            .latest('billing_date')
+        ).billing_date
+    except OrderItem.DoesNotExist:
+        latest_jr_subscription_date = None
+
+    profile.contributions_payed_until = get_expiry_date(latest_contribution_date)
+    profile.jr_subscribed_until = get_expiry_date(latest_jr_subscription_date)
+    profile.has_lifetime_contribution = lifetime_contribution
+    profile.save()
+
+
+
 class Product(models.Model):
     """A base product."""
 
@@ -175,6 +271,11 @@ class OrderItem(models.Model):
     def __str__(self):
         return "%s for %s on %s" % (self.product_price.product.name, self.user, self.order)
 
+    def save(self, *args, **kwargs):
+        res = super().save(*args, **kwargs)
+        recompute_profile(self.user)
+        return res
+
     @property
     def unit_price(self):
         return self.product_price.amount
@@ -189,28 +290,7 @@ class OrderItem(models.Model):
 
 
 def up_to_date(contributor, at=None):
-    if at is None:
-        at = timezone.now()
-    year_start = datetime.date(year=at.year, month=1, day=1)
-    return (contributor.ordered_items
-        .filter(
-            models.Q(product_price__product__kind__in=Product.FORLIFE_CONTRIBUTION_KINDS)
-            | (
-                models.Q(product_price__product__kind__in=Product.VALID_CONTRIBUTION_KINDS)
-                & models.Q(billing_date__gte=year_start)
-            )
-        )
-        .exists()
-    )
+    return contributor.contributor_profile.up_to_date(at)
 
 def jr_subscribed(contributor, at=None):
-    if at is None:
-        at = timezone.now()
-    year_start = datetime.date(year=at.year, month=1, day=1)
-    return (contributor.ordered_items
-        .filter(
-            product_price__product__kind__in=Product.JR_SUBSCRIBED_KINDS,
-            billing_date__gte=year_start
-        )
-        .exists()
-    )
+    return contributor.contributor_profile.jr_subscribed(at)

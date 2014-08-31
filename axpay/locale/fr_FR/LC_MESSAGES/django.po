@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-31 23:59+0200\n"
+"POT-Creation-Date: 2014-09-01 00:58+0200\n"
 "PO-Revision-Date: 2014-01-23 01:23+0100\n"
 "Last-Translator: Raphaël Barrois <raphael.barrois+axpay@polytechnique.org>\n"
 "Language-Team: Polytechnique.org dev team <opensource+axpay@polytechnique.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contributions/forms.py:18 money/models.py:160 sales/forms.py:123
+#: contributions/forms.py:18 money/models.py:256 sales/forms.py:123
 msgid "user"
 msgstr "utilisateur"
 
@@ -32,135 +32,159 @@ msgstr "Contient le produit"
 msgid "(Any product)"
 msgstr "(Tous produits)"
 
-#: money/models.py:26
+#: money/models.py:39
+msgid "contributor"
+msgstr "cotisant"
+
+#: money/models.py:42
+msgid "contributions payed until"
+msgstr "cotisations payé jusque"
+
+#: money/models.py:44
+msgid "subscribed to J&R until"
+msgstr "abonné à la J&R jusque"
+
+#: money/models.py:46
+msgid "lifetime contribution"
+msgstr "Cotisation à vie"
+
+#: money/models.py:51
+msgid "contributor profile"
+msgstr "profil de cotisation"
+
+#: money/models.py:52
+msgid "contributor profiles"
+msgstr "profils de cotisation"
+
+#: money/models.py:122
 msgid "Standard subscription"
 msgstr "Cotisation standard"
 
-#: money/models.py:27
+#: money/models.py:123
 msgid "'second of a couple' subscription"
 msgstr "cotisation 'conjoint'"
 
-#: money/models.py:28
+#: money/models.py:124
 msgid "Lifetime subscription"
 msgstr "Cotisation à vie"
 
-#: money/models.py:29
+#: money/models.py:125
 msgid "La jaune & la Rouge subscription"
 msgstr "Abonnement à La Jaune et La Rouge"
 
-#: money/models.py:45 money/models.py:117
+#: money/models.py:141 money/models.py:213
 msgid "kind"
 msgstr "type"
 
-#: money/models.py:46
+#: money/models.py:142
 msgid "name"
 msgstr "nom"
 
-#: money/models.py:49 money/models.py:74
+#: money/models.py:145 money/models.py:170
 msgid "product"
 msgstr "produit"
 
-#: money/models.py:50
+#: money/models.py:146
 msgid "products"
 msgstr "produits"
 
-#: money/models.py:75 money/models.py:139 money/models.py:163
+#: money/models.py:171 money/models.py:235 money/models.py:259
 msgid "amount"
 msgstr "montant"
 
-#: money/models.py:76 money/models.py:139
+#: money/models.py:172 money/models.py:235
 msgid "actual price, in euro cents"
 msgstr "prix effectif, en centimes d'euro"
 
-#: money/models.py:78
+#: money/models.py:174
 msgid "available since"
 msgstr "disponible à partir de"
 
-#: money/models.py:79
+#: money/models.py:175
 msgid "available until"
 msgstr "disponible jusque"
 
-#: money/models.py:84 money/models.py:162
+#: money/models.py:180 money/models.py:258
 msgid "product price"
 msgstr "prix d'un produit"
 
-#: money/models.py:85
+#: money/models.py:181
 msgid "product prices"
 msgstr "prix des produits"
 
-#: money/models.py:108
+#: money/models.py:204
 msgid "Cash"
 msgstr "Liquide"
 
-#: money/models.py:109
+#: money/models.py:205
 msgid "Check"
 msgstr "Chèque"
 
-#: money/models.py:110
+#: money/models.py:206
 msgid "Credit card"
 msgstr "Carte de crédit"
 
-#: money/models.py:111
+#: money/models.py:207
 msgid "Direct debit"
 msgstr "Prélèvement"
 
-#: money/models.py:115
+#: money/models.py:211
 msgid "owner"
 msgstr "titulaire"
 
-#: money/models.py:118
+#: money/models.py:214
 msgid "reference"
 msgstr "référence"
 
-#: money/models.py:121 money/models.py:136
+#: money/models.py:217 money/models.py:232
 msgid "payment mode"
 msgstr "moyen de paiement"
 
-#: money/models.py:122
+#: money/models.py:218
 msgid "payment modes"
 msgstr "moyens de paiement"
 
-#: money/models.py:137
+#: money/models.py:233
 msgid "payment date"
 msgstr "date de paiement"
 
-#: money/models.py:138
+#: money/models.py:234
 msgid "time at which the payment was confirmed"
 msgstr "date de confirmation du paiement"
 
-#: money/models.py:142
+#: money/models.py:238
 msgid "recurring"
 msgstr "récurrent"
 
-#: money/models.py:142
+#: money/models.py:238
 msgid "Automatically generated for recurring services"
 msgstr "Généré automatiquement pour un prélèvement récurrent"
 
-#: money/models.py:145 money/models.py:165
+#: money/models.py:241 money/models.py:261
 msgid "order"
 msgstr "flux financier"
 
-#: money/models.py:146
+#: money/models.py:242
 msgid "orders"
 msgstr "flux financiers"
 
-#: money/models.py:160
+#: money/models.py:256
 msgid "user for whom the product was bought"
 msgstr "utilisateur bénéficiant du produit acheté"
 
-#: money/models.py:167
+#: money/models.py:263
 msgid "billing date"
 msgstr "date de facturation"
 
-#: money/models.py:168
+#: money/models.py:264
 msgid "date at which the paid product should be activated"
 msgstr "date d'activation du produit acheté"
 
-#: money/models.py:172
+#: money/models.py:268
 msgid "order item"
 msgstr "élément commandé"
 
-#: money/models.py:173
+#: money/models.py:269
 msgid "order items"
 msgstr "éléments commandés"
 
@@ -258,8 +282,12 @@ msgid "Sold"
 msgstr "Vendu"
 
 #: web/templates/index.html:16
-msgid "Paid"
-msgstr "Payé"
+msgid "Up to date contributors"
+msgstr "Cotisants à jour"
+
+#: web/templates/index.html:20
+msgid "J&R subscribers"
+msgstr "Abonnés J&R"
 
 #: web/templates/login.html:6
 msgid "Authenticate"
@@ -372,7 +400,7 @@ msgid "Date"
 msgstr "Date"
 
 #: web/templates/contributions/contributor_detail.html:66
-#: web/templates/contributions/contributor_list.html:19
+#: web/templates/contributions/contributor_list.html:21
 #: web/templates/sales/index.html:39 web/templates/sales/order_list.html:17
 msgid "Products"
 msgstr "Produits"
@@ -388,14 +416,26 @@ msgid "Kind"
 msgstr "Type"
 
 #: web/templates/contributions/contributor_list.html:17
+msgid "Contribution expiry"
+msgstr "Expiration de la cotisation"
+
+#: web/templates/contributions/contributor_list.html:18
+msgid "J&R expires"
+msgstr "Expiration J&R"
+
+#: web/templates/contributions/contributor_list.html:19
 msgid "Last order"
 msgstr "Dernière commande"
 
-#: web/templates/contributions/contributor_list.html:18
+#: web/templates/contributions/contributor_list.html:20
 msgid "Last ordered product"
 msgstr "Dernier produit commandé"
 
-#: web/templates/contributions/contributor_list.html:27
+#: web/templates/contributions/contributor_list.html:29
+msgid "Forlife"
+msgstr "À vie"
+
+#: web/templates/contributions/contributor_list.html:33
 #, python-format
 msgid "#%(order_id)s on %(order_date)s"
 msgstr "N°%(order_id)s, le %(order_date)s"
@@ -470,6 +510,9 @@ msgstr "Filtrer"
 #: web/templatetags/standard_ui.py:27
 msgid "Filtering"
 msgstr "Filtrage"
+
+#~ msgid "Paid"
+#~ msgstr "Payé"
 
 #~ msgid "Payment"
 #~ msgstr "Paiement"

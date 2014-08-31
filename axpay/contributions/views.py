@@ -37,6 +37,7 @@ class ContributorsListView(generic.FilterListView):
 
     # List
     queryset = auth_models.User.objects.filter(ordered_items__isnull=False)
+    select_related = ['contributor_profile']
 
     def enrich_queryset(self, qs):
         order_items = (money_models.OrderItem.objects
