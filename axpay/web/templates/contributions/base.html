@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% load i18n nav %}
+
+{% block navside %}
+<ul class="nav nav-pills nav-stacked">
+    <li class="{% sidenavclass 'index' %}"><a href="{% url 'contributions:index' %}">{% trans "Dashboard" %}</a></li>
+    <li class="{% sidenavclass 'contributors' %}"><a href="{% url 'contributions:contributors' %}">{% trans "Contributors" %}</a></li>
+    <li class="{% sidenavclass 'exports' %}"><a href="{% url 'contributions:exports' %}">{% trans "Exports" %}</a></li>
+</ul>
+{% endblock %}
+

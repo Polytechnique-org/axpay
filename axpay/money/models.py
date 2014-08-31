@@ -4,6 +4,8 @@
 
 from __future__ import unicode_literals, print_function
 
+import datetime
+
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -25,6 +27,19 @@ class Product(models.Model):
         (KIND_COUPLE_SUBSCRIPTION, _("'second of a couple' subscription")),
         (KIND_LIFETIME_SUBSCRIPTION, _("Lifetime subscription")),
         (KIND_JR_SUBSCRIPTION, _("La jaune & la Rouge subscription")),
+    )
+
+    FORLIFE_CONTRIBUTION_KINDS = (
+        KIND_LIFETIME_SUBSCRIPTION,
+    )
+
+    VALID_CONTRIBUTION_KINDS = (
+        KIND_STANDARD_SUBSCRIPTION,
+        KIND_COUPLE_SUBSCRIPTION,
+    )
+
+    JR_SUBSCRIBED_KINDS = (
+        KIND_JR_SUBSCRIPTION,
     )
 
     kind = models.CharField(max_length=16, choices=KIND_CHOICES, verbose_name=_("kind"))
@@ -167,3 +182,35 @@ class OrderItem(models.Model):
     @property
     def total_price(self):
         return self.amount * self.unit_price
+
+    @property
+    def billing_year(self):
+        return self.billing_date.year
+
+
+def up_to_date(contributor, at=None):
+    if at is None:
+        at = timezone.now()
+    year_start = datetime.date(year=at.year, month=1, day=1)
+    return (contributor.ordered_items
+        .filter(
+            models.Q(product_price__product__kind__in=Product.FORLIFE_CONTRIBUTION_KINDS)
+            | (
+                models.Q(product_price__product__kind__in=Product.VALID_CONTRIBUTION_KINDS)
+                & models.Q(billing_date__gte=year_start)
+            )
+        )
+        .exists()
+    )
+
+def jr_subscribed(contributor, at=None):
+    if at is None:
+        at = timezone.now()
+    year_start = datetime.date(year=at.year, month=1, day=1)
+    return (contributor.ordered_items
+        .filter(
+            product_price__product__kind__in=Product.JR_SUBSCRIBED_KINDS,
+            billing_date__gte=year_start
+        )
+        .exists()
+    )

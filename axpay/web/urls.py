@@ -13,6 +13,7 @@ from .views import base as base_views
 urlpatterns = patterns('',
     url(r'^$', base_views.IndexView.as_view(), name='index'),
     url(r'^sales/', include('axpay.sales.urls', namespace='sales')),
+    url(r'^contributions/', include('axpay.contributions.urls', namespace='contributions')),
 )
 
 # Utils

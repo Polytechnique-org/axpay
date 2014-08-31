@@ -58,6 +58,8 @@ CORE_APPS = (
 
 WWW_APPS = (
     'axpay.web',
+    'axpay.sales',
+    'axpay.contributions',
 )
 
 DEV_APPS = (

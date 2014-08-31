@@ -46,6 +46,9 @@ class FilterListView(AXPayMixin, braces_views.SelectRelatedMixin, generic_edit.F
     def prepare_queryset(self, qs):
         return qs
 
+    def enrich_queryset(self, qs):
+        return qs
+
     def get_queryset(self):
         qs = super(FilterListView, self).get_queryset()
         qs = self.prepare_queryset(qs)
@@ -56,7 +59,7 @@ class FilterListView(AXPayMixin, braces_views.SelectRelatedMixin, generic_edit.F
             qs = self.form.filter(qs)
         else:
             qs = self.form.filter(qs, initial=True)
-        return qs
+        return self.enrich_queryset(qs)
 
     def get_context_data(self, **kwargs):
         ctxt = super().get_context_data(**kwargs)

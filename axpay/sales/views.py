@@ -2,7 +2,7 @@
 # Copyright (c) 2013 Polytechnique.org. All rights reserved.
 
 
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from axpay.money import models as money_models

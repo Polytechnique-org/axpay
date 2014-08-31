@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-31 20:18+0200\n"
+"POT-Creation-Date: 2014-08-31 23:59+0200\n"
 "PO-Revision-Date: 2014-01-23 01:23+0100\n"
 "Last-Translator: Raphaël Barrois <raphael.barrois+axpay@polytechnique.org>\n"
 "Language-Team: Polytechnique.org dev team <opensource+axpay@polytechnique.org>\n"
@@ -16,189 +16,199 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: money/models.py:24
-msgid "Standard subscription"
-msgstr "Cotisation standard"
-
-#: money/models.py:25
-msgid "'second of a couple' subscription"
-msgstr "cotisation 'conjoint'"
-
-#: money/models.py:26
-msgid "Lifetime subscription"
-msgstr "Cotisation à vie"
-
-#: money/models.py:27
-msgid "La jaune & la Rouge subscription"
-msgstr "Abonnement à La Jaune et La Rouge"
-
-#: money/models.py:30 money/models.py:102
-msgid "kind"
-msgstr "type"
-
-#: money/models.py:31
-msgid "name"
-msgstr "nom"
-
-#: money/models.py:34 money/models.py:59
-msgid "product"
-msgstr "produit"
-
-#: money/models.py:35
-msgid "products"
-msgstr "produits"
-
-#: money/models.py:60 money/models.py:124 money/models.py:148
-msgid "amount"
-msgstr "montant"
-
-#: money/models.py:61 money/models.py:124
-msgid "actual price, in euro cents"
-msgstr "prix effectif, en centimes d'euro"
-
-#: money/models.py:63
-msgid "available since"
-msgstr "disponible à partir de"
-
-#: money/models.py:64
-msgid "available until"
-msgstr "disponible jusque"
-
-#: money/models.py:69 money/models.py:147
-msgid "product price"
-msgstr "prix d'un produit"
-
-#: money/models.py:70
-msgid "product prices"
-msgstr "prix des produits"
-
-#: money/models.py:93
-msgid "Cash"
-msgstr "Liquide"
-
-#: money/models.py:94
-msgid "Check"
-msgstr "Chèque"
-
-#: money/models.py:95
-msgid "Credit card"
-msgstr "Carte de crédit"
-
-#: money/models.py:96
-msgid "Direct debit"
-msgstr "Prélèvement"
-
-#: money/models.py:100
-msgid "owner"
-msgstr "titulaire"
-
-#: money/models.py:103
-msgid "reference"
-msgstr "référence"
-
-#: money/models.py:106 money/models.py:121
-msgid "payment mode"
-msgstr "moyen de paiement"
-
-#: money/models.py:107
-msgid "payment modes"
-msgstr "moyens de paiement"
-
-#: money/models.py:122
-msgid "payment date"
-msgstr "date de paiement"
-
-#: money/models.py:123
-msgid "time at which the payment was confirmed"
-msgstr "date de confirmation du paiement"
-
-#: money/models.py:127
-msgid "recurring"
-msgstr "récurrent"
-
-#: money/models.py:127
-msgid "Automatically generated for recurring services"
-msgstr "Généré automatiquement pour un prélèvement récurrent"
-
-#: money/models.py:130 money/models.py:150
-msgid "order"
-msgstr "flux financier"
-
-#: money/models.py:131
-msgid "orders"
-msgstr "flux financiers"
-
-#: money/models.py:145
+#: contributions/forms.py:18 money/models.py:160 sales/forms.py:123
 msgid "user"
 msgstr "utilisateur"
 
-#: money/models.py:145
+#: contributions/forms.py:22 sales/forms.py:128
+msgid "Payer name"
+msgstr "Nom du payeur"
+
+#: contributions/forms.py:27 sales/forms.py:139
+msgid "Contains product"
+msgstr "Contient le produit"
+
+#: contributions/forms.py:29 sales/forms.py:141
+msgid "(Any product)"
+msgstr "(Tous produits)"
+
+#: money/models.py:26
+msgid "Standard subscription"
+msgstr "Cotisation standard"
+
+#: money/models.py:27
+msgid "'second of a couple' subscription"
+msgstr "cotisation 'conjoint'"
+
+#: money/models.py:28
+msgid "Lifetime subscription"
+msgstr "Cotisation à vie"
+
+#: money/models.py:29
+msgid "La jaune & la Rouge subscription"
+msgstr "Abonnement à La Jaune et La Rouge"
+
+#: money/models.py:45 money/models.py:117
+msgid "kind"
+msgstr "type"
+
+#: money/models.py:46
+msgid "name"
+msgstr "nom"
+
+#: money/models.py:49 money/models.py:74
+msgid "product"
+msgstr "produit"
+
+#: money/models.py:50
+msgid "products"
+msgstr "produits"
+
+#: money/models.py:75 money/models.py:139 money/models.py:163
+msgid "amount"
+msgstr "montant"
+
+#: money/models.py:76 money/models.py:139
+msgid "actual price, in euro cents"
+msgstr "prix effectif, en centimes d'euro"
+
+#: money/models.py:78
+msgid "available since"
+msgstr "disponible à partir de"
+
+#: money/models.py:79
+msgid "available until"
+msgstr "disponible jusque"
+
+#: money/models.py:84 money/models.py:162
+msgid "product price"
+msgstr "prix d'un produit"
+
+#: money/models.py:85
+msgid "product prices"
+msgstr "prix des produits"
+
+#: money/models.py:108
+msgid "Cash"
+msgstr "Liquide"
+
+#: money/models.py:109
+msgid "Check"
+msgstr "Chèque"
+
+#: money/models.py:110
+msgid "Credit card"
+msgstr "Carte de crédit"
+
+#: money/models.py:111
+msgid "Direct debit"
+msgstr "Prélèvement"
+
+#: money/models.py:115
+msgid "owner"
+msgstr "titulaire"
+
+#: money/models.py:118
+msgid "reference"
+msgstr "référence"
+
+#: money/models.py:121 money/models.py:136
+msgid "payment mode"
+msgstr "moyen de paiement"
+
+#: money/models.py:122
+msgid "payment modes"
+msgstr "moyens de paiement"
+
+#: money/models.py:137
+msgid "payment date"
+msgstr "date de paiement"
+
+#: money/models.py:138
+msgid "time at which the payment was confirmed"
+msgstr "date de confirmation du paiement"
+
+#: money/models.py:142
+msgid "recurring"
+msgstr "récurrent"
+
+#: money/models.py:142
+msgid "Automatically generated for recurring services"
+msgstr "Généré automatiquement pour un prélèvement récurrent"
+
+#: money/models.py:145 money/models.py:165
+msgid "order"
+msgstr "flux financier"
+
+#: money/models.py:146
+msgid "orders"
+msgstr "flux financiers"
+
+#: money/models.py:160
 msgid "user for whom the product was bought"
 msgstr "utilisateur bénéficiant du produit acheté"
 
-#: money/models.py:152
+#: money/models.py:167
 msgid "billing date"
 msgstr "date de facturation"
 
-#: money/models.py:153
+#: money/models.py:168
 msgid "date at which the paid product should be activated"
 msgstr "date d'activation du produit acheté"
 
-#: money/models.py:157
+#: money/models.py:172
 msgid "order item"
 msgstr "élément commandé"
 
-#: money/models.py:158
+#: money/models.py:173
 msgid "order items"
 msgstr "éléments commandés"
 
-#: sales/forms.py:22 web/templates/sales/order_detail.html:24
+#: sales/forms.py:23 web/templates/sales/order_detail.html:24
 msgid "User"
 msgstr "Utilisateur"
 
-#: sales/forms.py:27
+#: sales/forms.py:28 web/templates/contributions/contributor_detail.html:68
 msgid "Payment mode"
 msgstr "Moyen de paiement"
 
-#: sales/forms.py:32
+#: sales/forms.py:33
 msgid "Payment reference"
 msgstr "Référence de paiement"
 
-#: sales/forms.py:37
+#: sales/forms.py:38
 msgid "Order date"
 msgstr "Date de commande"
 
-#: sales/forms.py:42
+#: sales/forms.py:43
 msgid "Order total (€)"
 msgstr "Total de la commande (€)"
 
-#: sales/forms.py:66
+#: sales/forms.py:67
 #, python-format
 msgid "A payment with reference %s already exists."
 msgstr "Un paiement existe déjà pour la référence %s."
 
-#: sales/forms.py:77
+#: sales/forms.py:78
 msgid "An order must contain at least one product."
 msgstr "Une commande doit couvrir au moint un produit."
 
-#: sales/forms.py:80
+#: sales/forms.py:81
 #, python-format
 msgid "The amount is invalid, expected € %s"
 msgstr "Le montant est incorrect, %s € attendus"
 
-#: sales/forms.py:122
-#, fuzzy
+#: sales/forms.py:124
+msgid "payment kind"
+msgstr "mode de paiement"
+
+#: sales/forms.py:133
 msgid "Payment mode kind"
-msgstr "Moyen de paiement"
+msgstr "Mode de paiement"
 
-#: sales/forms.py:123 sales/forms.py:130
-msgid "(Any)"
-msgstr ""
-
-#: sales/forms.py:128
-#, fuzzy
-msgid "Contains product"
-msgstr "produit"
+#: sales/forms.py:134
+msgid "(Any payment kind)"
+msgstr "(tous modes de paiement)"
 
 #: util/templatetags/money.py:17
 #, python-format
@@ -213,19 +223,23 @@ msgstr "AX/Pay — Administration"
 msgid "Sales"
 msgstr "Ventes"
 
-#: web/templates/base.html:28
+#: web/templates/base.html:27
+msgid "Contributions"
+msgstr "Cotisations"
+
+#: web/templates/base.html:29
 msgid "Admin"
 msgstr "Administration"
 
-#: web/templates/base.html:38
+#: web/templates/base.html:39
 msgid "Welcome,"
 msgstr "Bienvenue,"
 
-#: web/templates/base.html:44
+#: web/templates/base.html:45
 msgid "Lang:"
 msgstr "Langue :"
 
-#: web/templates/base.html:56
+#: web/templates/base.html:57
 msgid "Log Out"
 msgstr "Déconnexion"
 
@@ -233,8 +247,9 @@ msgstr "Déconnexion"
 msgid "Metrics"
 msgstr "Indicateurs"
 
-#: web/templates/index.html:8 web/templates/sales/base.html:8
-#: web/templates/sales/order_list.html:6
+#: web/templates/index.html:8
+#: web/templates/contributions/contributor_detail.html:97
+#: web/templates/sales/base.html:8 web/templates/sales/order_list.html:6
 msgid "Orders"
 msgstr "Commandes"
 
@@ -254,13 +269,140 @@ msgstr "Authentification"
 msgid "You have been logged out."
 msgstr "Vous avez été déconnecté"
 
+#: web/templates/contributions/base.html:7 web/templates/sales/base.html:7
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: web/templates/contributions/base.html:8
+#: web/templates/contributions/contributor_list.html:6
+msgid "Contributors"
+msgstr "Cotisants"
+
+#: web/templates/contributions/base.html:9
+msgid "Exports"
+msgstr "Exports"
+
+#: web/templates/contributions/contributor_detail.html:6
+#, python-format
+msgid "Contributor %(contributor_name)s (#%(contributor_id)s)"
+msgstr "Cotisant %(contributor_name)s (N°%(contributor_id)s)"
+
+#: web/templates/contributions/contributor_detail.html:9
+#: web/templates/contributions/contributor_list.html:15
+msgid "ID"
+msgstr "ID"
+
+#: web/templates/contributions/contributor_detail.html:10
+#: web/templates/contributions/contributor_list.html:16
+msgid "Name"
+msgstr "Nom"
+
+#: web/templates/contributions/contributor_detail.html:11
+msgid "Up to date"
+msgstr "À jour"
+
+#: web/templates/contributions/contributor_detail.html:11
+#: web/templates/contributions/contributor_detail.html:12
+#: web/templates/sales/order_detail.html:14
+msgid "Yes,No,Unknown"
+msgstr "Oui,Non,Inconnu"
+
+#: web/templates/contributions/contributor_detail.html:12
+msgid "Subscribed to J&amp;R"
+msgstr "Abonné à la J&amp;R"
+
+#: web/templates/contributions/contributor_detail.html:16
+msgid "Ordered items"
+msgstr "Éléments commandés"
+
+#: web/templates/contributions/contributor_detail.html:17
+msgid "Passed orders"
+msgstr "Commandes passées"
+
+#: web/templates/contributions/contributor_detail.html:18
+msgid "Registered payment modes"
+msgstr "Moyens de paiement enregistrés"
+
+#: web/templates/contributions/contributor_detail.html:27
+#: web/templates/contributions/contributor_detail.html:63
+msgid "Year"
+msgstr "Année"
+
+#: web/templates/contributions/contributor_detail.html:28
+#: web/templates/sales/index.html:11 web/templates/sales/order_detail.html:20
+msgid "Product"
+msgstr "Produit"
+
+#: web/templates/contributions/contributor_detail.html:29
+msgid "Value date"
+msgstr "Date de valeur"
+
+#: web/templates/contributions/contributor_detail.html:30
+#: web/templates/sales/order_detail.html:21
+msgid "Quantity"
+msgstr "Quantité"
+
+#: web/templates/contributions/contributor_detail.html:31
+#: web/templates/sales/index.html:13 web/templates/sales/order_detail.html:22
+msgid "Unit price"
+msgstr "Prix unitaire"
+
+#: web/templates/contributions/contributor_detail.html:32
+msgid "Payed by"
+msgstr "Payé par"
+
+#: web/templates/contributions/contributor_detail.html:33
+msgid "Payed on"
+msgstr "Payé le"
+
+#: web/templates/contributions/contributor_detail.html:34
+msgid "Order"
+msgstr "Commande"
+
+#: web/templates/contributions/contributor_detail.html:64
+#: web/templates/contributions/contributor_detail.html:95
+#: web/templates/sales/index.html:37 web/templates/sales/order_list.html:15
+msgid "Reference"
+msgstr "Référence"
+
+#: web/templates/contributions/contributor_detail.html:65
+#: web/templates/sales/index.html:38 web/templates/sales/order_detail.html:9
+#: web/templates/sales/order_list.html:16
+msgid "Date"
+msgstr "Date"
+
+#: web/templates/contributions/contributor_detail.html:66
+#: web/templates/contributions/contributor_list.html:19
+#: web/templates/sales/index.html:39 web/templates/sales/order_list.html:17
+msgid "Products"
+msgstr "Produits"
+
+#: web/templates/contributions/contributor_detail.html:67
+#: web/templates/sales/index.html:40 web/templates/sales/order_detail.html:13
+#: web/templates/sales/order_list.html:18
+msgid "Amount"
+msgstr "Montant"
+
+#: web/templates/contributions/contributor_detail.html:96
+msgid "Kind"
+msgstr "Type"
+
+#: web/templates/contributions/contributor_list.html:17
+msgid "Last order"
+msgstr "Dernière commande"
+
+#: web/templates/contributions/contributor_list.html:18
+msgid "Last ordered product"
+msgstr "Dernier produit commandé"
+
+#: web/templates/contributions/contributor_list.html:27
+#, python-format
+msgid "#%(order_id)s on %(order_date)s"
+msgstr "N°%(order_id)s, le %(order_date)s"
+
 #: web/templates/include/form.html:9
 msgid "Cancel"
 msgstr "Annuler"
-
-#: web/templates/sales/base.html:7
-msgid "Dashboard"
-msgstr "Tableau de bord"
 
 #: web/templates/sales/base.html:9 web/templates/sales/order_register.html:6
 msgid "Register order"
@@ -270,17 +412,9 @@ msgstr "Enregistrer une commande"
 msgid "Current prices"
 msgstr "Tarifs en vigueur"
 
-#: web/templates/sales/index.html:11 web/templates/sales/order_detail.html:20
-msgid "Product"
-msgstr "Produit"
-
 #: web/templates/sales/index.html:12
 msgid "Product kind"
 msgstr "Type de produit"
-
-#: web/templates/sales/index.html:13 web/templates/sales/order_detail.html:22
-msgid "Unit price"
-msgstr "Prix unitaire"
 
 #: web/templates/sales/index.html:14
 msgid "Active since"
@@ -293,24 +427,6 @@ msgstr "Actif jusque"
 #: web/templates/sales/index.html:33
 msgid "Last orders"
 msgstr "Dernières commandes"
-
-#: web/templates/sales/index.html:37 web/templates/sales/order_list.html:15
-msgid "Reference"
-msgstr "Référence"
-
-#: web/templates/sales/index.html:38 web/templates/sales/order_detail.html:9
-#: web/templates/sales/order_list.html:16
-msgid "Date"
-msgstr "Date"
-
-#: web/templates/sales/index.html:39 web/templates/sales/order_list.html:17
-msgid "Products"
-msgstr "Produits"
-
-#: web/templates/sales/index.html:40 web/templates/sales/order_detail.html:13
-#: web/templates/sales/order_list.html:18
-msgid "Amount"
-msgstr "Montant"
 
 #: web/templates/sales/index.html:41 web/templates/sales/order_detail.html:10
 #: web/templates/sales/order_list.html:19
@@ -335,14 +451,6 @@ msgstr "Commande n°%(order_id)s"
 msgid "Recurring"
 msgstr "Récurrent"
 
-#: web/templates/sales/order_detail.html:14
-msgid "Yes,No,Unknown"
-msgstr "Oui,Non,Inconnu"
-
-#: web/templates/sales/order_detail.html:21
-msgid "Quantity"
-msgstr "Quantité"
-
 #: web/templates/sales/order_detail.html:23
 msgid "Total price"
 msgstr "Prix total"
@@ -358,3 +466,10 @@ msgstr "Appliquer"
 #: web/templatetags/standard_ui.py:27
 msgid "Filter"
 msgstr "Filtrer"
+
+#: web/templatetags/standard_ui.py:27
+msgid "Filtering"
+msgstr "Filtrage"
+
+#~ msgid "Payment"
+#~ msgstr "Paiement"

@@ -1,0 +1,115 @@
+{% extends 'contributions/base.html' %}
+
+{% load i18n money %}
+
+{% block content %}
+<h3>{% blocktrans with contributor_id=contributor.pk contributor_name=contributor.get_full_name %}Contributor {{ contributor_name }} (#{{ contributor_id }}){% endblocktrans %}</h3>
+
+<dl class="dl-horizontal">
+    <dt>{% trans "ID" %}</dt><dd>{{ contributor.pk }}</dd>
+    <dt>{% trans "Name" %}</dt><dd>{{ contributor.get_full_name }}</dd>
+    <dt>{% trans "Up to date" %}</dt><dd>{{ up_to_date|yesno:_("Yes,No,Unknown") }}</dd>
+    <dt>{% trans "Subscribed to J&amp;R" %}</dt><dd>{{ jr_subscribed|yesno:_("Yes,No,Unknown") }}</dd>
+</dl>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#items" role="tab" data-toggle="tab">{% trans "Ordered items" %} <span class="badge">{{ ordered_items.total }}</span></a></li>
+    <li><a href="#orders" role="tab" data-toggle="tab">{% trans "Passed orders" %} <span class="badge">{{ orders.total }}</span></a></li>
+    <li><a href="#payment-modes" role="tab" data-toggle="tab">{% trans "Registered payment modes" %} <span class="badge">{{ payment_modes|length }}</span></a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="items">
+
+        <table class="table table-stripped table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>{% trans "Year" %}</th>
+                    <th>{% trans "Product" %}</th>
+                    <th>{% trans "Value date" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Unit price" %}</th>
+                    <th>{% trans "Payed by" %}</th>
+                    <th>{% trans "Payed on" %}</th>
+                    <th>{% trans "Order" %}</th>
+                </tr>
+            </thead>
+            {% for year, order_items in ordered_items %}
+                <tbody>
+                    {% for order_item in order_items %}
+                    <tr>
+                        {% if forloop.first %}
+                            <th rowspan="{{ order_items|length }}">{{ year }}</th>
+                        {% endif %}
+                        <td>{{ order_item.product_price.product.name }} ({{ order_item.product_price.product.get_kind_display }})</td>
+                        <td>{{ order_item.billing_date }}</td>
+                        <td>{{ order_item.amount }}</td>
+                        <td>{{ order_item.unit_price|price }}</td>
+                        <td>{{ order_item.order.payment_mode.owner.get_full_name }}</td>
+                        <td>{{ order_item.order.payment_date }}</td>
+                        <td><a href="{% url 'sales:order-detail' order_item.order.pk %}">{{ order_item.order.pk }} ({{ order_item.order.payment_mode.get_kind_display }} <samp>{{ order_item.order.payment_mode.reference }}</samp>)</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="tab-pane" id="orders">
+
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>{% trans "Year" %}</th>
+                    <th>{% trans "Reference" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Products" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th>{% trans "Payment mode" %}</th>
+                </tr>
+            </thead>
+            {% for year, year_orders in orders %}
+                <tbody>
+                    {% for order in year_orders %}
+                    <tr>
+                        {% if forloop.first %}
+                            <th rowspan="{{ year_orders|length }}">{{ year }}</th>
+                        {% endif %}
+                        <td><a href="{% url 'sales:order-detail' order.pk %}">{{ order.payment_mode.reference }}</a></td>
+                        <td>{{ order.payment_date }}</td>
+                        <td>{{ order.nb_items }}</td>
+                        <td>{{ order.amount|price }}</td>
+                        <td>{{ order.payment_mode.get_kind_display }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
+    <div class="tab-pane" id="payment-modes">
+
+        <table class="table table-stripped table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>{% trans "Reference" %}</th>
+                    <th>{% trans "Kind" %}</th>
+                    <th>{% trans "Orders" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment_mode in payment_modes %}
+                <tr>
+                    <td><samp>{{ payment_mode.reference }}</samp></td>
+                    <td>{{ payment_mode.get_kind_display }}</td>
+                    <td>{{ payment_mode.orders_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}
+
+
