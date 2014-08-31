@@ -2,6 +2,7 @@
 # Copyright (c) 2013 Polytechnique.org. All rights reserved.
 
 from django.conf import settings
+from django.views import generic as django_generic_views
 
 from . import generic
 
@@ -11,7 +12,8 @@ class IndexView(generic.TemplateView):
     template_name = 'index.html'
 
 
-class LoginView(generic.TemplateView):
+# Don't use generic.TemplateView, as that would trigger a login redirect loop.
+class LoginView(django_generic_views.TemplateView):
     template_name = 'login.html'
 
     def get_context_data(self, **kwargs):
