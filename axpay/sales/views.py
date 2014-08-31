@@ -2,8 +2,8 @@
 # Copyright (c) 2013 Polytechnique.org. All rights reserved.
 
 
-from . import base
-from .. import forms
+from axpay.web.views import generic
+from . import forms
 
 #class UserListView(base.ListView):
 #    template_name = 'users_list.html'
@@ -12,12 +12,19 @@ from .. import forms
 #        return money_api.get_users()
 
 
-class PaymentRegisterView(base.FormView):
-    form_class = forms.PaymentRegisterForm
-    template_name = 'payment_register.html'
+class PaymentRegisterView(generic.FormView):
+    topnav = 'sales'
 
-    success_url = '/'
+    form_class = forms.PaymentRegisterForm
+    template_name = 'sales/payment_register.html'
+
+    success_url = 'sales:index'
 
     def form_valid(self, form):
         form.save()
         return super(PaymentRegisterView, self).form_valid(form)
+
+
+class SalesIndexView(generic.TemplateView):
+    topnav = 'sales'
+    template_name = 'sales/index.html'

@@ -23,6 +23,7 @@
 
               {# START MAIN NAV #}
               <li class="{% topnavclass 'home' %}"><a class="navbar-brand" href="{% url "index"%}">AX/Pay</a></li>
+              <li class="{% topnavclass 'sales' %}"><a class="navbar-brand" href="{% url "sales:index"%}">{% trans "Sales" %}</a></li>
               {% if user.is_staff %}
               <li class="{% topnavclass 'admin' %}"><a href="{% url "admin:index"%}">{% trans "Admin" %}</a></li>
               {% endif %}

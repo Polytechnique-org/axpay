@@ -8,12 +8,11 @@ admin.autodiscover()
 
 
 from .views import base as base_views
-from .views import sales as sales_views
 
 # Main views
 urlpatterns = patterns('',
     url(r'^$', base_views.IndexView.as_view(), name='index'),
-    url(r'^sales/register/$', sales_views.PaymentRegisterView.as_view(), name='payment-register'),
+    url(r'^sales/', include('axpay.sales.urls', namespace='sales')),
 )
 
 # Utils

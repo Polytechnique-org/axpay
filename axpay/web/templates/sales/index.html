@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% load bootstrap standard_ui i18n %}
+
+{% block content %}
+<h3>{% trans "Sales" %}</h3>
+<ul>
+    <li><a href="{% url 'sales:payment-register' %}">{% trans "Register payment" %}</a></li>
+</ul>
+{% endblock %}
+

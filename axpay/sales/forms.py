@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from axpay.money import models as money_models
 from axpay.money import utils as money_utils
 
+
 class PaymentRegisterForm(forms.Form):
     user = forms.ModelChoiceField(
         label=_("user"),
