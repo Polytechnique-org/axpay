@@ -32,8 +32,9 @@ The following commands are available.
     resetdb:    	Reinitialize the database schema
     demodb:		Reinitialize the database to a demo-ready setup
 
-- Testing:
+- Quality:
     test:		Run the test suite
+    pylint:		Check the code for coding style errors
 
 - Misc:
     clean:      	Cleanup all temporary files (*.pyc, ...)
@@ -103,6 +104,10 @@ test: $(TESTS)
 
 $(TESTS): test_% : static_%
 	AXPAY_SERVICE=$* $(MANAGE_PY) test $(MANAGE_OPTIONS)
+
+pylint:
+	pylint --rcfile=.pylintrc --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" \
+		--reports=no --output-format=colorized $(ROOT_DIR) || true
 
 resetdb:
 	rm -f db.sqlite
