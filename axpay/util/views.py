@@ -10,12 +10,12 @@ from django.utils.translation import check_for_language
 
 def set_language(request, lang_code):
     """View to change site language."""
-    next = request.GET.get('next')
-    if not is_safe_url(url=next, host=request.get_host()):
-        next = request.META.get('HTTP_REFERER')
-        if not is_safe_url(url=next, host=request.get_host()):
-            next = '/'
-    response = HttpResponseRedirect(next)
+    next_url = request.GET.get('next')
+    if not is_safe_url(url=next_url, host=request.get_host()):
+        next_url = request.META.get('HTTP_REFERER')
+        if not is_safe_url(url=next_url, host=request.get_host()):
+            next_url = '/'
+    response = HttpResponseRedirect(next_url)
     if lang_code and check_for_language(lang_code):
         if hasattr(request, 'session'):
             request.session['django_language'] = lang_code

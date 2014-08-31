@@ -89,7 +89,8 @@ class PaymentMode(models.Model):
         verbose_name_plural = _("payment modes")
 
     def __str__(self):
-        return '%s (%s) for %s' % (self.reference, self.get_kind_display(), self.owner.get_full_name() or self.owner.username)
+        return '%s (%s) for %s' % (
+            self.reference, self.get_kind_display(), self.owner.get_full_name() or self.owner.username)
 
 
 class CashFlow(models.Model):
@@ -130,7 +131,7 @@ class Payment(models.Model):
         help_text=_("date at which the paid service should be activated"))
 
     class Meta:
-        unique_together =  ('user', 'service_price', 'cashflow')
+        unique_together = ('user', 'service_price', 'cashflow')
         verbose_name = _("payment")
         verbose_name_plural = _("payments")
 

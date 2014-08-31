@@ -14,7 +14,6 @@ ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 CHECKOUT_DIR = os.path.abspath(os.path.dirname(ROOT_DIR))
 
 import getconf
-from django.conf import global_settings
 
 config = getconf.ConfigGetter('axpay',
     '/etc/axpay/settings.ini',

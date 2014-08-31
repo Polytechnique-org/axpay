@@ -31,7 +31,7 @@ class ServicePriceFactory(factory.django.DjangoModelFactory):
     service = factory.SubFactory(ServiceFactory)
     amount = factory.fuzzy.FuzzyInteger(100, 10000, step=50)
     available_since = factory.LazyAttribute(lambda _o: timezone.now())
-    available_until = factory.LazyAttribute(lambda o: o.available_since + datetime.timedelta(years=1))
+    available_until = factory.LazyAttribute(lambda o: o.available_since + datetime.timedelta(days=365))
 
 
 class PaymentModeFactory(factory.django.DjangoModelFactory):

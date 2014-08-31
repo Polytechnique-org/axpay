@@ -42,7 +42,7 @@ class InstanceOperationWrapper(object):
 
     def __call__(self, *args, **kwargs):
         if not self.is_available():
-            raise InvalidOperationError()
+            raise ProcessError()
         logger = logging.getLogger(self.instance.__class__.__module__)
 
         try:

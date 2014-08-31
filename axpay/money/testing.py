@@ -23,7 +23,7 @@ class AllServicesFactory(factory.Factory):
     ]
 
     @classmethod
-    def _create(cls, target_class, items):
+    def _create(cls, target_class, items):  # pylint: disable=arguments-differ
         services = []
         for kind, name in items:
             service, _created = target_class.objects.get_or_create(
@@ -38,12 +38,13 @@ class AllPricesFactory(factory.Factory):
     FACTORY_FOR = models.ServicePrice
 
     services = factory.SubFactory(AllServicesFactory)
-    available_since = factory.LazyAttribute(lambda _o: timezone.now().replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0))
+    available_since = factory.LazyAttribute(
+        lambda _o: timezone.now().replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0))
     available_until = None
     amount = 4200  # 42€
 
     @classmethod
-    def _create(cls, target_class, services, available_since, available_until, amount):
+    def _create(cls, target_class, services, available_since, available_until, amount):  # pylint: disable=arguments-differ
         prices = []
         for service in services:
             price, _created = target_class.objects.get_or_create(
