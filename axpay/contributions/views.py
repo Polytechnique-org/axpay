@@ -103,7 +103,10 @@ class ContributorDetailView(generic.DetailView):
 
         ordered_items = (contributor.ordered_items
             .order_by('-billing_date')
-            .select_related('order')
+            .select_related(
+                'product_price__product',
+                'order__payment_mode__owner',
+            )
         )
 
         payment_modes = (contributor.payment_modes
