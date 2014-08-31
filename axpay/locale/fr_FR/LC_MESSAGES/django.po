@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-19 21:55+0200\n"
+"POT-Creation-Date: 2014-08-31 16:08+0200\n"
 "PO-Revision-Date: 2014-01-23 01:23+0100\n"
 "Last-Translator: Raphaël Barrois <raphael.barrois+axpay@polytechnique.org>\n"
 "Language-Team: Polytechnique.org dev team <opensource+axpay@polytechnique.org>\n"
@@ -16,133 +16,168 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: money/models.py:23
+#: money/models.py:24
 msgid "Standard subscription"
 msgstr "Cotisation standard"
 
-#: money/models.py:24
+#: money/models.py:25
 msgid "'second of a couple' subscription"
 msgstr "cotisation 'conjoint'"
 
-#: money/models.py:25
+#: money/models.py:26
 msgid "Lifetime subscription"
 msgstr "Cotisation à vie"
 
-#: money/models.py:26
+#: money/models.py:27
 msgid "La jaune & la Rouge subscription"
 msgstr "Abonnement à La Jaune et La Rouge"
 
-#: money/models.py:29 money/models.py:84
+#: money/models.py:30 money/models.py:102
 msgid "kind"
 msgstr "type"
 
-#: money/models.py:30
+#: money/models.py:31
 msgid "name"
 msgstr "nom"
 
-#: money/models.py:33 money/models.py:43
+#: money/models.py:34 money/models.py:59
 msgid "service"
 msgstr "service"
 
-#: money/models.py:34
+#: money/models.py:35
 msgid "services"
 msgstr "services"
 
-#: money/models.py:44 money/models.py:105
+#: money/models.py:60 money/models.py:124 money/models.py:145
 msgid "amount"
 msgstr "montant"
 
-#: money/models.py:45 money/models.py:105
+#: money/models.py:61 money/models.py:124
 msgid "actual price, in euro cents"
 msgstr "prix effectif, en centimes d'euro"
 
-#: money/models.py:47
+#: money/models.py:63
 msgid "available since"
 msgstr "disponible à partir de"
 
-#: money/models.py:48
+#: money/models.py:64
 msgid "available until"
 msgstr "disponible jusque"
 
-#: money/models.py:51 money/models.py:125
+#: money/models.py:69 money/models.py:144
 msgid "service price"
 msgstr "prix d'un service"
 
-#: money/models.py:52
+#: money/models.py:70
 msgid "service prices"
 msgstr "prix de services"
 
-#: money/models.py:75
-msgid "cash"
-msgstr "liquide"
+#: money/models.py:93
+msgid "Cash"
+msgstr ""
 
-#: money/models.py:76
-msgid "check"
-msgstr "chèque"
+#: money/models.py:94
+msgid "Check"
+msgstr "Chèque"
 
-#: money/models.py:77
-msgid "credit card"
-msgstr "carte de crédit"
+#: money/models.py:95
+msgid "Credit card"
+msgstr "Carte de crédit"
 
-#: money/models.py:78
-msgid "direct debit"
-msgstr "prélèvement"
+#: money/models.py:96
+msgid "Direct debit"
+msgstr "Prélèvement"
 
-#: money/models.py:82
+#: money/models.py:100
 msgid "owner"
 msgstr "titulaire"
 
-#: money/models.py:85
+#: money/models.py:103
 msgid "reference"
 msgstr "référence"
 
-#: money/models.py:88 money/models.py:102
+#: money/models.py:106 money/models.py:121
 msgid "payment mode"
 msgstr "moyen de paiement"
 
-#: money/models.py:89
+#: money/models.py:107
 msgid "payment modes"
 msgstr "moyens de paiement"
 
-#: money/models.py:103
+#: money/models.py:122
 msgid "payment date"
 msgstr "date de paiement"
 
-#: money/models.py:104
+#: money/models.py:123
 msgid "time at which the payment was confirmed"
 msgstr "date de confirmation du paiement"
 
-#: money/models.py:108 money/models.py:127
+#: money/models.py:127 money/models.py:147
 msgid "cashflow"
 msgstr "flux financier"
 
-#: money/models.py:109
+#: money/models.py:128
 msgid "cashflows"
 msgstr "flux financiers"
 
-#: money/models.py:123
+#: money/models.py:142
 msgid "user"
 msgstr "utilisateur"
 
-#: money/models.py:123
+#: money/models.py:142
 msgid "user for whom the service was bought"
 msgstr "utilisateur bénéficiant du service acheté"
 
-#: money/models.py:129
+#: money/models.py:149
 msgid "billing date"
 msgstr "date de facturation"
 
-#: money/models.py:130
+#: money/models.py:150
 msgid "date at which the paid service should be activated"
 msgstr "date d'activation du service acheté"
 
-#: money/models.py:134
+#: money/models.py:154
 msgid "payment"
 msgstr "paiment"
 
-#: money/models.py:135
+#: money/models.py:155
 msgid "payments"
 msgstr "paiements"
+
+#: sales/forms.py:22 web/templates/sales/cashflow_detail.html:23
+msgid "User"
+msgstr "Utilisateur"
+
+#: sales/forms.py:27 web/templates/sales/cashflow_detail.html:11
+#: web/templates/sales/index.html:13
+msgid "Payment mode"
+msgstr "Moyen de paiement"
+
+#: sales/forms.py:32 web/templates/sales/cashflow_detail.html:9
+msgid "Payment reference"
+msgstr "Référence de paiement"
+
+#: sales/forms.py:37
+msgid "Payment date"
+msgstr "Date de paiement"
+
+#: sales/forms.py:42
+msgid "Payment total (€)"
+msgstr "Montant du paiement (€)"
+
+#: sales/forms.py:66
+#, python-format
+msgid "A payment with reference %s already exists."
+msgstr "Un paiement existe déjà pour la référence %s."
+
+#: sales/forms.py:77
+msgid "A payment must contain at least one service."
+msgstr "Un paiment doit couvrir au moint un service."
+
+#: sales/forms.py:80
+#, python-format
+msgid "The amount is invalid, expected %s€"
+msgstr "Le montant est incorrect, %s € attendus"
 
 #: util/templatetags/money.py:17
 #, python-format
@@ -153,19 +188,23 @@ msgstr "%s €"
 msgid "AX/Pay — Management"
 msgstr "AX/Pay — Administration"
 
-#: web/templates/base.html:27
+#: web/templates/base.html:26
+msgid "Sales"
+msgstr "Ventes"
+
+#: web/templates/base.html:28
 msgid "Admin"
 msgstr "Administration"
 
-#: web/templates/base.html:37
+#: web/templates/base.html:38
 msgid "Welcome,"
 msgstr "Bienvenue,"
 
-#: web/templates/base.html:43
+#: web/templates/base.html:44
 msgid "Lang:"
 msgstr "Langue :"
 
-#: web/templates/base.html:55
+#: web/templates/base.html:56
 msgid "Log Out"
 msgstr "Déconnexion"
 
@@ -192,3 +231,71 @@ msgstr "Authentification"
 #: web/templates/logout.html:8
 msgid "You have been logged out."
 msgstr "Vous avez été déconnecté"
+
+#: web/templates/include/form.html:9
+msgid "Cancel"
+msgstr "Annuler"
+
+#: web/templates/sales/base.html:7
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: web/templates/sales/base.html:8
+msgid "Cashflows"
+msgstr "Flux financiers"
+
+#: web/templates/sales/base.html:9 web/templates/sales/payment_register.html:6
+msgid "Register payment"
+msgstr "Enregistrer un paiment"
+
+#: web/templates/sales/cashflow_detail.html:6
+#, python-format
+msgid "Cashflow #%(cashflow_id)s"
+msgstr "Paiement n°%(cashflow_id)s"
+
+#: web/templates/sales/cashflow_detail.html:10
+#: web/templates/sales/index.html:11
+msgid "Date"
+msgstr "Date"
+
+#: web/templates/sales/cashflow_detail.html:12
+#: web/templates/sales/index.html:14
+msgid "Payer"
+msgstr "Payeur"
+
+#: web/templates/sales/cashflow_detail.html:13
+#: web/templates/sales/index.html:12
+msgid "Amount"
+msgstr "Montant"
+
+#: web/templates/sales/cashflow_detail.html:19
+msgid "Service"
+msgstr "Service"
+
+#: web/templates/sales/cashflow_detail.html:20
+msgid "Quantity"
+msgstr "Quantité"
+
+#: web/templates/sales/cashflow_detail.html:21
+msgid "Unit price"
+msgstr "Prix unitaire"
+
+#: web/templates/sales/cashflow_detail.html:22
+msgid "Total price"
+msgstr "Prix total"
+
+#: web/templates/sales/index.html:6
+msgid "Last payments"
+msgstr "Derniers paiements"
+
+#: web/templates/sales/index.html:10
+msgid "Reference"
+msgstr "Référence"
+
+#: web/templates/sales/payment_register.html:8
+msgid "Register"
+msgstr "Enregistrer"
+
+#: web/templatetags/standard_ui.py:13
+msgid "Submit"
+msgstr "Appliquer"
