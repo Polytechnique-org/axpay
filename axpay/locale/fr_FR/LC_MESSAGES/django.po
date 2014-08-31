@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-31 17:35+0200\n"
+"POT-Creation-Date: 2014-08-31 17:57+0200\n"
 "PO-Revision-Date: 2014-01-23 01:23+0100\n"
 "Last-Translator: Raphaël Barrois <raphael.barrois+axpay@polytechnique.org>\n"
 "Language-Team: Polytechnique.org dev team <opensource+axpay@polytechnique.org>\n"
@@ -48,7 +48,7 @@ msgstr "produit"
 msgid "products"
 msgstr "produits"
 
-#: money/models.py:60 money/models.py:124 money/models.py:145
+#: money/models.py:60 money/models.py:124 money/models.py:150
 msgid "amount"
 msgstr "montant"
 
@@ -64,7 +64,7 @@ msgstr "disponible à partir de"
 msgid "available until"
 msgstr "disponible jusque"
 
-#: money/models.py:69 money/models.py:144
+#: money/models.py:69 money/models.py:149
 msgid "product price"
 msgstr "prix d'un produit"
 
@@ -74,7 +74,7 @@ msgstr "prix des produits"
 
 #: money/models.py:93
 msgid "Cash"
-msgstr ""
+msgstr "Liquide"
 
 #: money/models.py:94
 msgid "Check"
@@ -112,44 +112,43 @@ msgstr "date de paiement"
 msgid "time at which the payment was confirmed"
 msgstr "date de confirmation du paiement"
 
-#: money/models.py:127 money/models.py:147
+#: money/models.py:132 money/models.py:152
 msgid "order"
 msgstr "flux financier"
 
-#: money/models.py:128
+#: money/models.py:133
 msgid "orders"
 msgstr "flux financiers"
 
-#: money/models.py:142
+#: money/models.py:147
 msgid "user"
 msgstr "utilisateur"
 
-#: money/models.py:142
+#: money/models.py:147
 msgid "user for whom the product was bought"
 msgstr "utilisateur bénéficiant du produit acheté"
 
-#: money/models.py:149
+#: money/models.py:154
 msgid "billing date"
 msgstr "date de facturation"
 
-#: money/models.py:150
+#: money/models.py:155
 msgid "date at which the paid product should be activated"
 msgstr "date d'activation du produit acheté"
 
-#: money/models.py:154
-msgid "payment"
-msgstr "paiment"
+#: money/models.py:159
+msgid "order item"
+msgstr "élément commandé"
 
-#: money/models.py:155
-msgid "payments"
-msgstr "paiements"
+#: money/models.py:160
+msgid "order items"
+msgstr "éléments commandés"
 
-#: sales/forms.py:22 web/templates/sales/cashflow_detail.html:23
+#: sales/forms.py:22 web/templates/sales/order_detail.html:24
 msgid "User"
 msgstr "Utilisateur"
 
-#: sales/forms.py:27 web/templates/sales/cashflow_detail.html:11
-#: web/templates/sales/index.html:13
+#: sales/forms.py:27
 msgid "Payment mode"
 msgstr "Moyen de paiement"
 
@@ -158,12 +157,12 @@ msgid "Payment reference"
 msgstr "Référence de paiement"
 
 #: sales/forms.py:37
-msgid "Payment date"
-msgstr "Date de paiement"
+msgid "Order date"
+msgstr "Date de commande"
 
 #: sales/forms.py:42
-msgid "Payment total (€)"
-msgstr "Montant du paiement (€)"
+msgid "Order total (€)"
+msgstr "Total de la commande (€)"
 
 #: sales/forms.py:66
 #, python-format
@@ -171,13 +170,12 @@ msgid "A payment with reference %s already exists."
 msgstr "Un paiement existe déjà pour la référence %s."
 
 #: sales/forms.py:77
-#, fuzzy
-msgid "A payment must contain at least one product;"
-msgstr "Un paiment doit couvrir au moint un produit."
+msgid "An order must contain at least one product."
+msgstr "Une commande doit couvrir au moint un produit."
 
 #: sales/forms.py:80
 #, python-format
-msgid "The amount is invalid, expected %s€"
+msgid "The amount is invalid, expected € %s"
 msgstr "Le montant est incorrect, %s € attendus"
 
 #: util/templatetags/money.py:17
@@ -213,7 +211,7 @@ msgstr "Déconnexion"
 msgid "Metrics"
 msgstr "Indicateurs"
 
-#: web/templates/index.html:8
+#: web/templates/index.html:8 web/templates/sales/base.html:8
 msgid "Orders"
 msgstr "Commandes"
 
@@ -241,60 +239,68 @@ msgstr "Annuler"
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: web/templates/sales/base.html:8
-msgid "Cashflows"
-msgstr "Flux financiers"
+#: web/templates/sales/base.html:9 web/templates/sales/order_register.html:6
+msgid "Register order"
+msgstr "Enregistrer une commande"
 
-#: web/templates/sales/base.html:9 web/templates/sales/payment_register.html:6
-msgid "Register payment"
-msgstr "Enregistrer un paiment"
+#: web/templates/sales/index.html:6
+msgid "Last orders"
+msgstr "Dernières commandes"
 
-#: web/templates/sales/cashflow_detail.html:6
-#, python-format
-msgid "Cashflow #%(order_id)s"
-msgstr "Paiement n°%(order_id)s"
-
-#: web/templates/sales/cashflow_detail.html:9
 #: web/templates/sales/index.html:10
 msgid "Reference"
 msgstr "Référence"
 
-#: web/templates/sales/cashflow_detail.html:10
-#: web/templates/sales/index.html:11
+#: web/templates/sales/index.html:11 web/templates/sales/order_detail.html:9
 msgid "Date"
 msgstr "Date"
 
-#: web/templates/sales/cashflow_detail.html:12
-#: web/templates/sales/index.html:14
-msgid "Payer"
-msgstr "Payeur"
-
-#: web/templates/sales/cashflow_detail.html:13
-#: web/templates/sales/index.html:12
+#: web/templates/sales/index.html:12 web/templates/sales/order_detail.html:13
 msgid "Amount"
 msgstr "Montant"
 
-#: web/templates/sales/cashflow_detail.html:19
+#: web/templates/sales/index.html:13 web/templates/sales/order_detail.html:10
+msgid "OrderItem mode"
+msgstr "Moyen de paiement"
+
+#: web/templates/sales/index.html:14 web/templates/sales/order_detail.html:12
+msgid "Payer"
+msgstr "Payeur"
+
+#: web/templates/sales/index.html:30
+msgid "View more..."
+msgstr "Voir plus..."
+
+#: web/templates/sales/order_detail.html:6
+#, python-format
+msgid "Order #%(order_id)s"
+msgstr "Commande n°%(order_id)s"
+
+#: web/templates/sales/order_detail.html:14
+msgid "Recurring"
+msgstr "Récurrent"
+
+#: web/templates/sales/order_detail.html:14
+msgid "Yes,No,Unknown"
+msgstr "Oui,Non,Inconnu"
+
+#: web/templates/sales/order_detail.html:20
 msgid "Product"
 msgstr "Produit"
 
-#: web/templates/sales/cashflow_detail.html:20
+#: web/templates/sales/order_detail.html:21
 msgid "Quantity"
 msgstr "Quantité"
 
-#: web/templates/sales/cashflow_detail.html:21
+#: web/templates/sales/order_detail.html:22
 msgid "Unit price"
 msgstr "Prix unitaire"
 
-#: web/templates/sales/cashflow_detail.html:22
+#: web/templates/sales/order_detail.html:23
 msgid "Total price"
 msgstr "Prix total"
 
-#: web/templates/sales/index.html:6
-msgid "Last payments"
-msgstr "Derniers paiements"
-
-#: web/templates/sales/payment_register.html:8
+#: web/templates/sales/order_register.html:8
 msgid "Register"
 msgstr "Enregistrer"
 

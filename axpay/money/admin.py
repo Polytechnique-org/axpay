@@ -43,7 +43,7 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(models.Order, OrderAdmin)
 
 
-class PaymentAdmin(admin.ModelAdmin):
+class OrderItemAdmin(admin.ModelAdmin):
     list_display = ['product_price', 'order', 'user', 'billing_date']
     list_filter = ['product_price__product', 'product_price', 'order__payment_mode__kind', 'billing_date']
     search_fields = [
@@ -53,5 +53,5 @@ class PaymentAdmin(admin.ModelAdmin):
     ]
     date_hierarchy = 'billing_date'
 
-admin.site.register(models.Payment, PaymentAdmin)
+admin.site.register(models.OrderItem, OrderItemAdmin)
 

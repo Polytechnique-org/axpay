@@ -15,5 +15,5 @@ class Command(base.NoArgsCommand):
     help = "Load a demo, standard database."
 
     def handle_noargs(self, **kwargs):
-        payments = money_testing.ExamplePaymentsFactory()
-        print("Setup %d payments" % len(payments))
+        orders = money_testing.ExampleOrdersFactory()
+        print("Setup %d orders" % len(orders))

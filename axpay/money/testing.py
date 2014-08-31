@@ -73,18 +73,18 @@ class ExamplePaymentOwnerFactory(factory.django.DjangoModelFactory):
     last_name = factory.Sequence(lambda n: "Demo%s" % n)
 
 
-class ExamplePaymentFactory(factory.Factory):
+class ExampleOrderFactory(factory.Factory):
     class Meta:
-        model = models.Payment
+        model = models.Order
         exclude = ['items', 'product_prices']
 
     owner = factory.SubFactory(ExamplePaymentOwnerFactory)
 
     items = [models.Product.KIND_STANDARD_SUBSCRIPTION]
-    nb_payments = 1
+    nb_orders = 1
     payment_kind = models.PaymentMode.KIND_CASH
-    latest_payment = factory.LazyAttribute(lambda _o: timezone.now())
-    ref_date = factory.LazyAttribute(lambda o: o.latest_payment - datetime.timedelta(days=365 * o.nb_payments))
+    latest_order = factory.LazyAttribute(lambda _o: timezone.now())
+    ref_date = factory.LazyAttribute(lambda o: o.latest_order - datetime.timedelta(days=365 * o.nb_orders))
     product_prices = factory.LazyAttribute(lambda _o: models.ProductPrice.objects.all())
 
     @classmethod
@@ -112,10 +112,10 @@ class ExamplePaymentFactory(factory.Factory):
 
     @classmethod
     def _create(cls, target_class,
-            selected_product_prices, nb_payments, payment_kind,
-            latest_payment, ref_date, owner, reference):
+            selected_product_prices, nb_orders, payment_kind,
+            latest_order, ref_date, owner, reference):
 
-        payments = []
+        ordered_items = []
         aggregated_product_prices = collections.Counter(selected_product_prices)
 
         payment_mode = models.PaymentMode.objects.create(
@@ -124,48 +124,48 @@ class ExamplePaymentFactory(factory.Factory):
             reference=reference,
         )
         products_total = sum(sp.amount for sp in selected_product_prices)
-        for i in range(nb_payments):
-            order = models.Order.objects.create(
+        for i in range(nb_orders):
+            order = target_class.objects.create(
                 payment_mode=payment_mode,
                 payment_date=ref_date + i * datetime.timedelta(days=365),
                 amount=products_total,
+                recurring=nb_orders > 1,
             )
             for sp, amount in aggregated_product_prices.items():
-                payment = target_class.objects.create(
+                models.OrderItem.objects.create(
                     user=payment_mode.owner,
                     product_price=sp,
                     amount=amount,
                     order=order,
                     billing_date=order.payment_date.date(),
                 )
-                payments.append(payment)
-        return payments
+        return order
 
 
-class ExamplePaymentsFactory(factory.Factory):
+class ExampleOrdersFactory(factory.Factory):
     class Meta:
-        model = models.Payment
+        model = models.Order
 
     prices = factory.SubFactory(AllPricesFactory)
 
-    payments = factory.List([
-        factory.SubFactory(ExamplePaymentFactory,
+    orders = factory.List([
+        factory.SubFactory(ExampleOrderFactory,
             product_prices=factory.SelfAttribute('...prices'),
             items=[models.Product.KIND_STANDARD_SUBSCRIPTION],
             payment_kind=models.PaymentMode.KIND_CASH,
         ),
-        factory.SubFactory(ExamplePaymentFactory,
+        factory.SubFactory(ExampleOrderFactory,
             product_prices=factory.SelfAttribute('...prices'),
             items=[models.Product.KIND_STANDARD_SUBSCRIPTION, models.Product.KIND_COUPLE_SUBSCRIPTION],
             payment_kind=models.PaymentMode.KIND_CHECK,
         ),
-        factory.SubFactory(ExamplePaymentFactory,
+        factory.SubFactory(ExampleOrderFactory,
             product_prices=factory.SelfAttribute('...prices'),
             items=[models.Product.KIND_STANDARD_SUBSCRIPTION],
-            nb_payments=3,
+            nb_orders=3,
             payment_kind=models.PaymentMode.KIND_CARD,
         ),
-        factory.SubFactory(ExamplePaymentFactory,
+        factory.SubFactory(ExampleOrderFactory,
             product_prices=factory.SelfAttribute('...prices'),
             items=[
                 models.Product.KIND_STANDARD_SUBSCRIPTION,
@@ -173,11 +173,11 @@ class ExamplePaymentsFactory(factory.Factory):
                 models.Product.KIND_JR_SUBSCRIPTION,
                 models.Product.KIND_JR_SUBSCRIPTION,
             ],
-            nb_payments=4,
+            nb_orders=4,
             payment_kind=models.PaymentMode.KIND_DIRECT,
         ),
     ])
 
     @classmethod
-    def _create(cls, target_class, prices, payments):
-        return sum(payments, [])
+    def _create(cls, target_class, prices, orders):
+        return orders

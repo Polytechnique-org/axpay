@@ -3,14 +3,15 @@
 {% load i18n money %}
 
 {% block content %}
-<h3>{% blocktrans with order_id=order.pk %}Cashflow #{{ order_id }}{% endblocktrans %}</h3>
+<h3>{% blocktrans with order_id=order.pk %}Order #{{ order_id }}{% endblocktrans %}</h3>
 
 <dl class="dl-horizontal">
-    <dt>{% trans "Reference" %}</dt><dd><samp>{{ order.payment_mode.reference }}</samp></dd>
     <dt>{% trans "Date" %}</dt><dd>{{ order.payment_date }}</dd>
-    <dt>{% trans "Payment mode" %}</dt><dd>{{ order.payment_mode.get_kind_display }}</dd>
+    <dt>{% trans "OrderItem mode" %}</dt>
+        <dd><samp>{{ order.payment_mode.reference }}</samp> ({{ order.payment_mode.get_kind_display }})</dd>
     <dt>{% trans "Payer" %}</dt><dd>{{ order.payment_mode.owner.get_full_name }}</dd>
     <dt>{% trans "Amount" %}</dt><dd>{{ order.amount|price }}</dd>
+    <dt>{% trans "Recurring" %}</dt><dd>{{ order.recurring|yesno:_("Yes,No,Unknown") }}</dd>
 </dl>
 
 <table class="table table-stripped table-hover table-condensed">
@@ -24,13 +25,13 @@
         </tr>
     </thead>
     <tbody>
-        {% for payment in order_payments %}
+        {% for order_item in order_items %}
         <tr>
-            <td>{{ payment.product_price.product.name }} ({{ payment.product_price.product.get_kind_display }})</td>
-            <td>{{ payment.amount }}</td>
-            <td>{{ payment.unit_price|price }}</td>
-            <td>{{ payment.total_price|price }}</td>
-            <td>{{ payment.user.get_full_name }}</td>
+            <td>{{ order_item.product_price.product.name }} ({{ order_item.product_price.product.get_kind_display }})</td>
+            <td>{{ order_item.amount }}</td>
+            <td>{{ order_item.unit_price|price }}</td>
+            <td>{{ order_item.total_price|price }}</td>
+            <td>{{ order_item.user.get_full_name }}</td>
         </tr>
         {% endfor %}
     </tbody>

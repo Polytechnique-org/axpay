@@ -17,7 +17,7 @@ class UserChoiceField(forms.ModelChoiceField):
         return "%s (#%d)" % (obj.get_full_name(), obj.pk)
 
 
-class PaymentRegisterForm(forms.Form):
+class OrderRegisterForm(forms.Form):
     user = UserChoiceField(
         label=_("User"),
         queryset=auth.get_user_model().objects,
@@ -33,20 +33,20 @@ class PaymentRegisterForm(forms.Form):
         max_length=32,
     )
 
-    payment_date = forms.DateField(
-        label=_("Payment date"),
+    order_date = forms.DateField(
+        label=_("Order date"),
         initial=datetime.date.today,
     )
 
     amount = forms.DecimalField(
-        label=_("Payment total (€)"),
+        label=_("Order total (€)"),
         min_value=0,
         decimal_places=2,
     )
 
     def __init__(self, *args, **kwargs):
         products = kwargs.pop('products')
-        super(PaymentRegisterForm, self).__init__(*args, **kwargs)
+        super(OrderRegisterForm, self).__init__(*args, **kwargs)
 
         self._products_list = {}
         for product in products:
@@ -67,17 +67,17 @@ class PaymentRegisterForm(forms.Form):
         return reference
 
     def clean(self):
-        cleaned_data = super(PaymentRegisterForm, self).clean()
+        cleaned_data = super(OrderRegisterForm, self).clean()
 
         expected_amount = 0
         for field_name, product in self._products_list.items():
             expected_amount += product.amount * cleaned_data.get(field_name, 0)
 
         if expected_amount == 0:
-            raise forms.ValidationError(_("A payment must contain at least one product;"))
+            raise forms.ValidationError(_("An order must contain at least one product."))
 
         if cleaned_data.get('amount', 0) * 100 != expected_amount:
-            self._errors['amount'] = self.error_class([_("The amount is invalid, expected %s€") % money_utils.currency(expected_amount)])
+            self._errors['amount'] = self.error_class([_("The amount is invalid, expected € %s") % money_utils.currency(expected_amount)])
 
         return cleaned_data
 
@@ -97,21 +97,21 @@ class PaymentRegisterForm(forms.Form):
             amount=data['amount'] * 100,
         )
 
-        payments = []
+        order_contents = []
         for field_name, product_price in self._products_list.items():
             product_amount = data[field_name]
             if product_amount > 0:
-                payments.append(money_models.Payment.objects.create(
+                order_contents.append(money_models.OrderItem.objects.create(
                     user=owner,
                     product_price=product_price,
                     amount=product_amount,
                     order=order,
-                    billing_date=data['payment_date'],
+                    billing_date=data['order_date'],
                 ))
 
         return {
             'owner': owner,
             'payment_mode': payment_mode,
             'order': order,
-            'payments': payments,
+            'contents': order_contents,
         }

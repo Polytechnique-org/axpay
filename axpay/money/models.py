@@ -123,6 +123,9 @@ class Order(models.Model):
         help_text=_("time at which the payment was confirmed"))
     amount = models.IntegerField(verbose_name=_("amount"), help_text=_("actual price, in euro cents"))
 
+    recurring = models.BooleanField(default=False,
+        verbose_name=_("recurring"), help_text=_("Automatically generated for recurring services"))
+
     class Meta:
         verbose_name = _("order")
         verbose_name_plural = _("orders")
@@ -135,15 +138,15 @@ class Order(models.Model):
         )
 
 
-class Payment(models.Model):
-    """A payment action."""
+class OrderItem(models.Model):
+    """An item from an order."""
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='payments',
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='ordered_items',
         verbose_name=_("user"), help_text=_("user for whom the product was bought"))
-    product_price = models.ForeignKey(ProductPrice, related_name='payments',
+    product_price = models.ForeignKey(ProductPrice, related_name='order_items',
         verbose_name=_("product price"))
     amount = models.PositiveIntegerField(verbose_name=_("amount"))
-    order = models.ForeignKey(Order, related_name='payments',
+    order = models.ForeignKey(Order, related_name='items',
         verbose_name=_("order"))
 
     billing_date = models.DateField(verbose_name=_("billing date"),
@@ -151,8 +154,8 @@ class Payment(models.Model):
 
     class Meta:
         unique_together = ('user', 'product_price', 'order')
-        verbose_name = _("payment")
-        verbose_name_plural = _("payments")
+        verbose_name = _("order item")
+        verbose_name_plural = _("order items")
 
     def __str__(self):
         return "%s for %s on %s" % (self.product_price.product.name, self.user, self.order)

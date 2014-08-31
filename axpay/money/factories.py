@@ -52,9 +52,9 @@ class OrderFactory(factory.django.DjangoModelFactory):
     amount = factory.fuzzy.FuzzyInteger(100, 10000, step=50)
 
 
-class PaymentFactory(factory.django.DjangoModelFactory):
+class OrderItemFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = models.Payment
+        model = models.OrderItem
 
     user = factory.SubFactory(auth_factories.UserF)
     product_price = models.SubFactory(ProductPriceFactory)

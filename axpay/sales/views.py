@@ -36,18 +36,18 @@ class SalesIndexView(generic.TemplateView):
         return ctxt
 
 
-class PaymentRegisterView(generic.FormView):
+class OrderRegisterView(generic.FormView):
     topnav = 'sales'
-    sidenav = 'payment-register'
+    sidenav = 'order-register'
 
-    form_class = forms.PaymentRegisterForm
-    template_name = 'sales/payment_register.html'
+    form_class = forms.OrderRegisterForm
+    template_name = 'sales/order_register.html'
 
     success_url = 'sales:order-detail'
 
     def get_form_kwargs(self):
         """Override the default kwargs to add our list of available products."""
-        kwargs = super(PaymentRegisterView, self).get_form_kwargs()
+        kwargs = super(OrderRegisterView, self).get_form_kwargs()
         kwargs.update(
             products=money_models.ProductPrice.objects.available().order_by('product__name'),
         )
@@ -56,13 +56,13 @@ class PaymentRegisterView(generic.FormView):
     def form_valid(self, form):
         data = form.save()
         self._order = data['order']
-        return super(PaymentRegisterView, self).form_valid(form)
+        return super(OrderRegisterView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'pk': self._order.pk})
 
 
-class PaymentListView(generic.TemplateView):
+class OrderListView(generic.TemplateView):
     pass
 
 
@@ -77,11 +77,11 @@ class OrderDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         ctxt = super(OrderDetailView, self).get_context_data(**kwargs)
         order = ctxt['order']
-        order_payments = order.payments.select_related(
+        order_items = order.items.select_related(
             'product_price__product',
             'user',
         )
         ctxt.update(
-            order_payments=order_payments,
+            order_items=order_items,
         )
         return ctxt
