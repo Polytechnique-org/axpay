@@ -6,3 +6,9 @@ getconf
 django-authgroupex
 django-bootstrap3>=3.0.0
 django-braces>=1.2.2
+
+# For debug & co
+django-debug-toolbar
+
+factory_boy>=2.3.1
+

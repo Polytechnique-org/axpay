@@ -8,7 +8,7 @@ import os
 import re
 import sys
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 root_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -39,7 +39,7 @@ setup(
     keywords=['payment', 'subscription', 'ax', 'Polytechnique.org'],
     url="https://github.com/Polytechnique-org/%s/" % PACKAGE,
     download_url="https://pypi.python.org/pypi/%s/" % PACKAGE,
-    packages=[PACKAGE],
+    packages=find_packages(),
     platforms=["OS Independent"],
     install_requires=codecs.open('requirements.txt', 'r', 'utf-8').readlines(),
     setup_requires=[
@@ -57,5 +57,6 @@ setup(
         "Topic :: Office/Business:: Financial",
     ],
     test_suite='tests',
+    zip_safe=False,
 )
 

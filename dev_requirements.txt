@@ -1,10 +1,7 @@
 # Import main requirements
 -r requirements.txt
 
-django-debug-toolbar
-
 django-factory_boy
-factory_boy>=2.3.1
 
 # For doc
 Sphinx

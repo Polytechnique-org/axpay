@@ -1,4 +1,4 @@
-MANAGE_PY = python manage.py
+MANAGE_PY = python3 manage.py
 ROOT_DIR = axpay
 DOC_DIR = docs
 SERVICES = core www

@@ -49,6 +49,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'bootstrap3',  # For pretty forms too
+    'django_authgroupex',
 )
 
 CORE_APPS = (
@@ -64,7 +65,6 @@ WWW_APPS = (
 
 DEV_APPS = (
     'debug_toolbar',
-    'django_authgroupex',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CORE_APPS + WWW_APPS
@@ -95,7 +95,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(CHECKOUT_DIR, 'db.sqlite'),
+        'NAME': config.get('db.name', os.path.join(CHECKOUT_DIR, 'db.sqlite')),
         'ATOMIC_REQUESTS': True,
     }
 }
