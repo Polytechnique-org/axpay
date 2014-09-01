@@ -1,0 +1,24 @@
+# Temporary files
+.*.swp
+*.pyc
+*.pyo
+
+# Git
+.git
+
+# Local dev files
+db.sqlite
+local_settings.ini
+
+# Build-related files
+axpay/static/
+docs/_build/
+.coverage
+.tox
+*.egg-info
+*.egg
+*.mo
+build/
+dist/
+htmlcov/
+MANIFEST

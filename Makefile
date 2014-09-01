@@ -36,6 +36,9 @@ The following commands are available.
     test:		Run the test suite
     pylint:		Check the code for coding style errors
 
+- Production:
+    docker:		Build the docker image
+
 - Misc:
     clean:      	Cleanup all temporary files (*.pyc, ...)
     doc:        	Generate the documentation
@@ -134,6 +137,14 @@ $(JENKINS_TARGETS): jenkins_% : static_%
 
 .PHONY: jenkins $(JENKINS_TARGETS)
 
+
+# Production
+# ==========
+
+docker:
+	docker build -t rbarrois/axpay .
+
+.PHONY: docker
 
 # Misc
 # ====

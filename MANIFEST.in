@@ -1,0 +1,7 @@
+include README.rst
+include *requirements.txt
+
+recursive-include tests *.py
+recursive-include axpay *.po *.mo
+recursive-include axpay *.html *.txt *.js *.png *.gif *.tiff *.ico *.css *.xlsx *.pdf *.yaml *.json *.xpi
+recursive-include axpay *.eot *.svg *.ttf *.woff

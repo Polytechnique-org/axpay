@@ -36,7 +36,10 @@ class ContributorsListView(generic.FilterListView):
     template_name = 'contributions/contributor_list.html'
 
     # List
-    queryset = auth_models.User.objects.filter(ordered_items__isnull=False)
+    @property
+    def queryset(self):
+        return auth_models.User.objects.filter(ordered_items__isnull=False)
+
     select_related = ['contributor_profile']
 
     def enrich_queryset(self, qs):
@@ -93,9 +96,12 @@ class ContributorDetailView(generic.DetailView):
     topnav = 'contributions'
     sidenav = 'contributors'
 
-    model = auth_models.User
     context_object_name = 'contributor'
     template_name = 'contributions/contributor_detail.html'
+
+    @property
+    def queryset(self):
+        return auth_models.User
 
     def get_context_data(self, **kwargs):
         ctxt = super().get_context_data(**kwargs)
