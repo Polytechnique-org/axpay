@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-01 00:58+0200\n"
+"POT-Creation-Date: 2014-09-01 01:01+0200\n"
 "PO-Revision-Date: 2014-01-23 01:23+0100\n"
 "Last-Translator: Raphaël Barrois <raphael.barrois+axpay@polytechnique.org>\n"
 "Language-Team: Polytechnique.org dev team <opensource+axpay@polytechnique.org>\n"
@@ -420,7 +420,7 @@ msgid "Contribution expiry"
 msgstr "Expiration de la cotisation"
 
 #: web/templates/contributions/contributor_list.html:18
-msgid "J&R expires"
+msgid "J&R expiry"
 msgstr "Expiration J&R"
 
 #: web/templates/contributions/contributor_list.html:19
@@ -510,9 +510,3 @@ msgstr "Filtrer"
 #: web/templatetags/standard_ui.py:27
 msgid "Filtering"
 msgstr "Filtrage"
-
-#~ msgid "Paid"
-#~ msgstr "Payé"
-
-#~ msgid "Payment"
-#~ msgstr "Paiement"
