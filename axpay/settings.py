@@ -300,3 +300,9 @@ CONFTOOLS_CONFIG = config
 BOOTSTRAP3 = {
     'set_placeholder': False,
 }
+
+# Django-debug-toolbar
+# ====================
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+

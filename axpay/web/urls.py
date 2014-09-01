@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2013 AX. All rights reserved.
 
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
@@ -36,3 +37,9 @@ admin.site.login_template = 'authgroupex/admin_login.html'
 urlpatterns += patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if settings.ENV == 'dev':
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )
