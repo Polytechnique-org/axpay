@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2013 AX. All rights reserved.
+# Copyright (c) 2014 Polytechnique.org
+# This software is distributed under the GPLv3+ license.
+
 
 from django.conf import settings
 from django.conf.urls import patterns, include, url

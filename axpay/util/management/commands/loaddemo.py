@@ -3,7 +3,6 @@
 # This software is distributed under the GPLv3+ license.
 
 
-
 from django.core.management import base
 
 
