@@ -101,7 +101,7 @@ class ContributorDetailView(generic.DetailView):
 
     @property
     def queryset(self):
-        return auth_models.User
+        return auth_models.User.objects
 
     def get_context_data(self, **kwargs):
         ctxt = super().get_context_data(**kwargs)

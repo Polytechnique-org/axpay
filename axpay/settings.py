@@ -15,10 +15,11 @@ CHECKOUT_DIR = os.path.abspath(os.path.dirname(ROOT_DIR))
 
 import getconf
 
-config = getconf.ConfigGetter('axpay',
-    '/etc/axpay/settings.ini',
-    os.path.join(CHECKOUT_DIR, 'local_settings.ini'),
-    )
+config = getconf.ConfigGetter('axpay', [
+        '/etc/axpay/settings.ini',
+        os.path.join(CHECKOUT_DIR, 'local_settings.ini'),
+    ],
+)
 
 # ENV: The current environment
 ENV = config.get('environment', 'dev')
