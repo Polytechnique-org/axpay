@@ -78,7 +78,7 @@ class OrderRegisterForm(forms.Form):
             raise forms.ValidationError(_("An order must contain at least one product."))
 
         if cleaned_data.get('amount', 0) * 100 != expected_amount:
-            self._errors['amount'] = self.error_class([_("The amount is invalid, expected € %s") % money_utils.currency(expected_amount)])
+            self.add_error('amount', forms.ValidationError(_("The amount is invalid, expected € %s") % money_utils.currency(expected_amount)))
 
         return cleaned_data
 

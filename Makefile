@@ -114,7 +114,7 @@ pylint:
 
 resetdb:
 	rm -f db.sqlite
-	$(MANAGE_PY) syncdb --noinput $(MANAGE_OPTIONS)
+	$(MANAGE_PY) migrate --noinput $(MANAGE_OPTIONS)
 
 demodb: resetdb
 	$(MANAGE_PY) loaddemo $(MANAGE_OPTIONS)

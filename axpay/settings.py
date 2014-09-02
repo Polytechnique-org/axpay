@@ -64,7 +64,7 @@ WWW_APPS = (
 )
 
 DEV_APPS = (
-    'debug_toolbar',
+    'debug_toolbar.apps.DebugToolbarConfig',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CORE_APPS + WWW_APPS
@@ -220,7 +220,6 @@ MIDDLEWARE_CLASSES = (
 
 if ENV == 'dev':
     INTERNAL_IPS = ('127.0.0.1', '::1')
-    MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'axpay.wsgi.application'
@@ -300,9 +299,4 @@ CONFTOOLS_CONFIG = config
 BOOTSTRAP3 = {
     'set_placeholder': False,
 }
-
-# Django-debug-toolbar
-# ====================
-
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
 

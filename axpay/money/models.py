@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from . import utils
 
 
-class ContributorProfileManager(models.Manager):
+class ContributorProfileQuerySet(models.QuerySet):
     def up_to_date(self, at=None):
         if at is None:
             at = timezone.now()
@@ -45,7 +45,7 @@ class ContributorProfile(models.Model):
     has_lifetime_contribution = models.BooleanField(default=False, db_index=True,
         verbose_name=_("lifetime contribution"))
 
-    objects = ContributorProfileManager()
+    objects = ContributorProfileQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("contributor profile")
@@ -149,7 +149,7 @@ class Product(models.Model):
         return '%s (%s)' % (self.name, self.get_kind_display())
 
 
-class ProductPriceManager(models.Manager):
+class ProductPriceQuerySet(models.QuerySet):
     def available(self, at=None):
         if at is None:
             at = timezone.now()
@@ -174,7 +174,7 @@ class ProductPrice(models.Model):
     available_since = models.DateTimeField(verbose_name=_("available since"))
     available_until = models.DateTimeField(blank=True, null=True, verbose_name=_("available until"))
 
-    objects = ProductPriceManager()
+    objects = ProductPriceQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("product price")
