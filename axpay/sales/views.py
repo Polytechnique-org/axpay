@@ -23,7 +23,7 @@ class SalesIndexView(generic.TemplateView):
     template_name = 'sales/index.html'
 
     def get_context_data(self, **kwargs):
-        ctxt = super(SalesIndexView, self).get_context_data(**kwargs)
+        ctxt = super().get_context_data(**kwargs)
 
         prices = (money_models.ProductPrice.objects
             .available()
@@ -61,7 +61,7 @@ class OrderRegisterView(generic.FormView):
 
     def get_form_kwargs(self):
         """Override the default kwargs to add our list of available products."""
-        kwargs = super(OrderRegisterView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update(
             products=money_models.ProductPrice.objects.available().order_by('product__name'),
         )
@@ -70,7 +70,7 @@ class OrderRegisterView(generic.FormView):
     def form_valid(self, form):
         data = form.save()
         self._order = data['order']
-        return super(OrderRegisterView, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'pk': self._order.pk})
@@ -110,7 +110,7 @@ class OrderDetailView(generic.DetailView):
     template_name = 'sales/order_detail.html'
 
     def get_context_data(self, **kwargs):
-        ctxt = super(OrderDetailView, self).get_context_data(**kwargs)
+        ctxt = super().get_context_data(**kwargs)
         order = ctxt['order']
         order_items = order.items.select_related(
             'product_price__product',

@@ -12,7 +12,7 @@ class AXPayMixin(braces_views.LoginRequiredMixin):
     sidenav = ''
 
     def get_context_data(self, **kwargs):
-        ctxt = super(AXPayMixin, self).get_context_data(**kwargs)
+        ctxt = super().get_context_data(**kwargs)
         ctxt.update(
             topnav=self.topnav,
             sidenav=self.sidenav,
@@ -39,7 +39,7 @@ class FilterListView(AXPayMixin, braces_views.SelectRelatedMixin, generic_edit.F
 
     def get_form_kwargs(self):
         """Override to use GET instead of POST."""
-        kwargs = super(FilterListView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['data'] = self.request.GET or None
         return kwargs
 
@@ -50,7 +50,7 @@ class FilterListView(AXPayMixin, braces_views.SelectRelatedMixin, generic_edit.F
         return qs
 
     def get_queryset(self):
-        qs = super(FilterListView, self).get_queryset()
+        qs = super().get_queryset()
         qs = self.prepare_queryset(qs)
 
         self.form = self.get_form(self.get_form_class())

@@ -30,7 +30,7 @@ class LoginView(django_generic_views.TemplateView):
     template_name = 'login.html'
 
     def get_context_data(self, **kwargs):
-        ctxt = super(LoginView, self).get_context_data(**kwargs)
+        ctxt = super().get_context_data(**kwargs)
         next_url = ctxt.get('next') or self.request.GET.get('next') or settings.LOGIN_REDIRECT_URL
         ctxt.update({
             'next': next_url,

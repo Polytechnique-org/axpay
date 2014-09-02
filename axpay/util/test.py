@@ -16,7 +16,7 @@ class BalTestSuiteRunner(DjangoTestSuiteRunner):
             test_labels = [app.split('.')[-1] for app in settings.TEST_APPS]
 
         # Add regular tests if required
-        return super(BalTestSuiteRunner, self).build_suite(test_labels, **kwargs)
+        return super().build_suite(test_labels, **kwargs)
 
 
 class BalXMLTestSuiteRunner(BalTestSuiteRunner):

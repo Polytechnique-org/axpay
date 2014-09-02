@@ -47,7 +47,7 @@ class OrderRegisterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         products = kwargs.pop('products')
-        super(OrderRegisterForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self._products_list = {}
         for product in products:
@@ -68,7 +68,7 @@ class OrderRegisterForm(forms.Form):
         return reference
 
     def clean(self):
-        cleaned_data = super(OrderRegisterForm, self).clean()
+        cleaned_data = super().clean()
 
         expected_amount = 0
         for field_name, product in self._products_list.items():
@@ -143,7 +143,7 @@ class OrderFilterForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        super(OrderFilterForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for field_name, placeholder in self.placeholders.items():
             self.fields[field_name].widget.attrs['placeholder'] = placeholder
 
