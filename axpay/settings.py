@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = (
 )
 
 CORE_APPS = (
+    'axpay.accounts',
     'axpay.money',
     'axpay.util',
 )

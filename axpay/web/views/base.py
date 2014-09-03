@@ -7,6 +7,7 @@ from django.conf import settings
 from django.db import models
 from django.views import generic as django_generic_views
 
+from axpay.accounts import models as accounts_models
 from axpay.money import models as money_models
 
 from . import generic
@@ -21,8 +22,8 @@ class IndexView(generic.TemplateView):
         ctxt.update(
             orders=money_models.Order.objects.count(),
             sold=money_models.Order.objects.all().aggregate(total_amount=models.Sum('amount'))['total_amount'],
-            active_contributors=money_models.ContributorProfile.objects.up_to_date().count(),
-            jr_subscribed=money_models.ContributorProfile.objects.jr_subscribed().count()
+            active_contributors=accounts_models.Contributor.objects.up_to_date().count(),
+            jr_subscribed=accounts_models.Contributor.objects.jr_subscribed().count()
         )
         return ctxt
 

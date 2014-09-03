@@ -10,7 +10,7 @@ class ProcessError(Exception):
     """Base exception for all process-related errors."""
 
 
-class operation(object):
+class operation():
     def __init__(self, checker):
         self.checker = checker
 
@@ -18,7 +18,7 @@ class operation(object):
         return OperationWrapper(self.checker, target)
 
 
-class OperationWrapper(object):
+class OperationWrapper():
     def __init__(self, checker, target):
         self.checker = checker
         self.target = target
@@ -33,7 +33,7 @@ class OperationWrapper(object):
         )
 
 
-class InstanceOperationWrapper(object):
+class InstanceOperationWrapper():
     def __init__(self, instance, checker, target):
         self.checker = checker
         self.target = target

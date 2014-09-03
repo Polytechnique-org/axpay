@@ -4,10 +4,10 @@
 
 import collections
 
-from django.contrib.auth import models as auth_models
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from axpay.accounts import models as accounts_models
 from axpay.money import models as money_models
 from axpay.web.views import generic
 
@@ -37,9 +37,7 @@ class ContributorsListView(generic.FilterListView):
     template_name = 'contributions/contributor_list.html'
 
     # List
-    @property
-    def queryset(self):
-        return auth_models.User.objects.filter(ordered_items__isnull=False)
+    model = accounts_models.Contributor
 
     select_related = ['contributor_profile']
 
@@ -68,7 +66,7 @@ class ContributorsListView(generic.FilterListView):
         return users
 
 
-class GroupedItems(object):
+class GroupedItems():
     def __init__(self, items, total):
         self.items = items
         self.total = total
@@ -100,9 +98,7 @@ class ContributorDetailView(generic.DetailView):
     context_object_name = 'contributor'
     template_name = 'contributions/contributor_detail.html'
 
-    @property
-    def queryset(self):
-        return auth_models.User.objects
+    model = accounts_models.Contributor
 
     def get_context_data(self, **kwargs):
         ctxt = super().get_context_data(**kwargs)

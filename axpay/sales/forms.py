@@ -5,11 +5,11 @@
 import datetime
 
 from django import forms
-from django.contrib import auth
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from axpay.accounts import models as accounts_models
 from axpay.money import models as money_models
 from axpay.money import utils as money_utils
 
@@ -22,7 +22,7 @@ class UserChoiceField(forms.ModelChoiceField):
 class OrderRegisterForm(forms.Form):
     user = UserChoiceField(
         label=_("User"),
-        queryset=auth.get_user_model().objects,
+        queryset=accounts_models.Contributor.objects,
     )
 
     payment_mode_kind = forms.ChoiceField(

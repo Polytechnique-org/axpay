@@ -5,7 +5,6 @@
 
 import datetime
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
@@ -14,102 +13,39 @@ from django.utils.translation import ugettext_lazy as _
 from . import utils
 
 
-class ContributorProfileQuerySet(models.QuerySet):
-    def up_to_date(self, at=None):
-        if at is None:
-            at = timezone.now()
-        return (self
-            .filter(
-                models.Q(contributions_payed_until__gte=at.date())
-                | models.Q(has_lifetime_contribution=True)
-            )
-            .distinct()
-        )
-
-    def jr_subscribed(self, at=None):
-        if at is None:
-            at = timezone.now()
-        return self.filter(jr_subscribed_until__gte=at.date())
-
-
-class ContributorProfile(models.Model):
-    """Extra data about a contributor."""
-
-    contributor = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='contributor_profile',
-        verbose_name=_("contributor"))
-
-    contributions_payed_until = models.DateField(blank=True, null=True, db_index=True,
-        verbose_name=_("contributions payed until"))
-    jr_subscribed_until = models.DateField(blank=True, null=True, db_index=True,
-        verbose_name=_("subscribed to J&R until"))
-    has_lifetime_contribution = models.BooleanField(default=False, db_index=True,
-        verbose_name=_("lifetime contribution"))
-
-    objects = ContributorProfileQuerySet.as_manager()
-
-    class Meta:
-        verbose_name = _("contributor profile")
-        verbose_name_plural = _("contributor profiles")
-
-    def __str__(self):
-        return self.contributor.get_full_name()
-
-    def get_absolute_url(self):
-        return reverse('contributions:contributor-detail', args=[self.pk])
-
-    def up_to_date(self, at):
-        if at is None:
-            at = timezone.now()
-        return (self.has_lifetime_contribution
-            or (self.contributions_payed_until is not None
-                and self.contributions_payed_until >= at.date()
-            )
-        )
-
-    def jr_subscribed(self, at):
-        if at is None:
-            at = timezone.now()
-        return (self.jr_subscribed_until is not None
-                and self.jr_subscribed_until >= at.date())
-
-
 def get_expiry_date(billing_date, jr=False):
     if billing_date is None:
         return billing_date
     return datetime.date(year=billing_date.year + 1, month=1, day=1)
 
 
-def recompute_profile(user):
-    try:
-        profile = user.contributor_profile
-    except ContributorProfile.DoesNotExist:
-        profile = ContributorProfile.objects.create(contributor=user)
+def recompute_profile(contributor):
 
     try:
-        latest_contribution_date = (user.ordered_items
+        latest_contribution_date = (contributor.ordered_items
             .filter(product_price__product__kind__in=Product.VALID_CONTRIBUTION_KINDS)
             .latest('billing_date')
         ).billing_date
     except OrderItem.DoesNotExist:
         latest_contribution_date = None
 
-    lifetime_contribution = (user.ordered_items
+    lifetime_contribution = (contributor.ordered_items
         .filter(product_price__product__kind__in=Product.FORLIFE_CONTRIBUTION_KINDS)
         .exists()
     )
 
     try:
-        latest_jr_subscription_date = (user.ordered_items
+        latest_jr_subscription_date = (contributor.ordered_items
             .filter(product_price__product__kind__in=Product.JR_SUBSCRIBED_KINDS)
             .latest('billing_date')
         ).billing_date
     except OrderItem.DoesNotExist:
         latest_jr_subscription_date = None
 
-    profile.contributions_payed_until = get_expiry_date(latest_contribution_date)
-    profile.jr_subscribed_until = get_expiry_date(latest_jr_subscription_date)
-    profile.has_lifetime_contribution = lifetime_contribution
-    profile.save()
+    contributor.contributions_payed_until = get_expiry_date(latest_contribution_date)
+    contributor.jr_subscribed_until = get_expiry_date(latest_jr_subscription_date)
+    contributor.has_lifetime_contribution = lifetime_contribution
+    contributor.save()
 
 
 
@@ -210,7 +146,7 @@ class PaymentMode(models.Model):
         (KIND_DIRECT, _("Direct debit")),
     )
 
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='payment_modes',
+    owner = models.ForeignKey('accounts.Contributor', related_name='payment_modes',
         verbose_name=_("owner"))
     kind = models.CharField(max_length=16, choices=KIND_CHOICES,
         verbose_name=_("kind"))
@@ -258,7 +194,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     """An item from an order."""
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='ordered_items',
+    user = models.ForeignKey('accounts.Contributor', related_name='ordered_items',
         verbose_name=_("user"), help_text=_("user for whom the product was bought"))
     product_price = models.ForeignKey(ProductPrice, related_name='order_items',
         verbose_name=_("product price"))
@@ -296,7 +232,7 @@ class OrderItem(models.Model):
 
 
 def up_to_date(contributor, at=None):
-    return contributor.contributor_profile.up_to_date(at)
+    return contributor.up_to_date(at)
 
 def jr_subscribed(contributor, at=None):
-    return contributor.contributor_profile.jr_subscribed(at)
+    return contributor.jr_subscribed(at)

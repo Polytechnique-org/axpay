@@ -8,9 +8,9 @@ import datetime
 import factory
 import factory.django
 
-from django.contrib.auth import models as auth_models
 from django.utils import timezone
 
+from axpay.accounts import models as accounts_models
 from . import models
 
 
@@ -65,9 +65,8 @@ class AllPricesFactory(factory.Factory):
 
 class ExamplePaymentOwnerFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = auth_models.User
+        model = accounts_models.Contributor
 
-    username = factory.Sequence(lambda n: 'demo-owner-%s' % n)
     first_name = "John"
     last_name = factory.Sequence(lambda n: "Demo%s" % n)
 
