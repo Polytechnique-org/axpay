@@ -6,6 +6,7 @@
 import datetime
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -52,6 +53,9 @@ class ContributorProfile(models.Model):
 
     def __str__(self):
         return self.contributor.get_full_name()
+
+    def get_absolute_url(self):
+        return reverse('contributions:contributor-detail', args=[self.pk])
 
     def up_to_date(self, at):
         if at is None:
@@ -246,6 +250,9 @@ class Order(models.Model):
             self.payment_mode.reference,
             self.payment_date,
         )
+
+    def get_absolute_url(self):
+        return reverse('sales:order-detail', args=[self.pk])
 
 
 class OrderItem(models.Model):

@@ -9,7 +9,7 @@
     <dt>{% trans "Date" %}</dt><dd>{{ order.payment_date }}</dd>
     <dt>{% trans "OrderItem mode" %}</dt>
         <dd><samp>{{ order.payment_mode.reference }}</samp> ({{ order.payment_mode.get_kind_display }})</dd>
-    <dt>{% trans "Payer" %}</dt><dd>{{ order.payment_mode.owner.get_full_name }}</dd>
+    <dt>{% trans "Payer" %}</dt><dd><a href="{{ order.payment_mode.owner.get_absolute_url }}">{{ order.payment_mode.owner.get_full_name }}</a></dd>
     <dt>{% trans "Amount" %}</dt><dd>{{ order.amount|price }}</dd>
     <dt>{% trans "Recurring" %}</dt><dd>{{ order.recurring|yesno:_("Yes,No,Unknown") }}</dd>
 </dl>
@@ -31,7 +31,7 @@
             <td>{{ order_item.amount }}</td>
             <td>{{ order_item.unit_price|price }}</td>
             <td>{{ order_item.total_price|price }}</td>
-            <td>{{ order_item.user.get_full_name }}</td>
+            <td><a href="{{ order_item.user.get_absolute_url }}">{{ order_item.user.get_full_name }}</a></td>
         </tr>
         {% endfor %}
     </tbody>

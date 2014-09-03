@@ -24,13 +24,13 @@
     <tbody>
         {% for contributor in contributors %}
         <tr>
-            <td><a href="{% url 'contributions:contributor-detail' contributor.pk %}">{{ contributor.pk }}</a></td>
+            <td><a href="{{ contributor.get_absolute_url }}">{{ contributor.pk }}</a></td>
             <td>{{ contributor.get_full_name }}</td>
             <td>{% if contributor.contributor_profile.has_lifetime_contribution %}<em>{% trans "Forlife" %}</em>{% else %}
                 {{ contributor.contributor_profile.contributions_payed_until|default:"" }}
                 {% endif %}</td>
             <td>{{ contributor.contributor_profile.jr_subscribed_until|default:"" }}</td>
-            <td><a href="{% url 'sales:order-detail' contributor.last_order_item.order.pk %}">{% blocktrans with order_id=contributor.last_order_item.order.pk order_date=contributor.last_order_item.order.payment_date %}#{{ order_id }} on {{ order_date}}{% endblocktrans %}</a></td>
+            <td><a href="{{ contributor.last_order_item.order.get_absolute_url }}">{% blocktrans with order_id=contributor.last_order_item.order.pk order_date=contributor.last_order_item.order.payment_date %}#{{ order_id }} on {{ order_date}}{% endblocktrans %}</a></td>
             <td>{{ contributor.last_order_item.product_price.product.name }} ({{ contributor.last_order_item.billing_date}})</td>
             <td>{{ contributor.nb_products }}</td>
         </tr>

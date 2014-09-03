@@ -23,12 +23,12 @@
     <tbody>
         {% for order in orders %}
         <tr>
-            <td><a href="{% url 'sales:order-detail' order.pk %}">{{ order.payment_mode.reference }}</a></td>
+            <td><a href="{{ order.get_absolute_url }}">{{ order.pk }}</a></td>
             <td>{{ order.payment_date }}</td>
             <td>{{ order.nb_items }}</td>
             <td>{{ order.amount|price }}</td>
-            <td>{{ order.payment_mode.get_kind_display }}</td>
-            <td>{{ order.payment_mode.owner.get_full_name }}</td>
+            <td>{{ order.payment_mode.reference }} ({{ order.payment_mode.get_kind_display }})</td>
+            <td><a href="{{ order.payment_mode.owner.get_absolute_url }}">{{ order.payment_mode.owner.get_full_name }}</a></td>
         </tr>
         {% endfor %}
     </tbody>
