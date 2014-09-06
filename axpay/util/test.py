@@ -9,7 +9,7 @@ from django.test.simple import DjangoTestSuiteRunner
 import xmlrunner
 
 
-class BalTestSuiteRunner(DjangoTestSuiteRunner):
+class AXPayTestSuiteRunner(DjangoTestSuiteRunner):
     def build_suite(self, test_labels, extra_tests=None, **kwargs):
 
         # Test only the applications in TEST_APPS
@@ -20,7 +20,7 @@ class BalTestSuiteRunner(DjangoTestSuiteRunner):
         return super().build_suite(test_labels, **kwargs)
 
 
-class BalXMLTestSuiteRunner(BalTestSuiteRunner):
+class AXPayXMLTestSuiteRunner(AXPayTestSuiteRunner):
     def run_suite(self, suite, **kwargs):
         """Run the suite and generate an XML report."""
         options = {
