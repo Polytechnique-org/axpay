@@ -41,6 +41,7 @@ setup(
     url="https://github.com/Polytechnique-org/%s/" % PACKAGE,
     download_url="https://pypi.python.org/pypi/%s/" % PACKAGE,
     packages=find_packages(),
+    include_package_data=True,
     platforms=["OS Independent"],
     install_requires=codecs.open('requirements.txt', 'r', 'utf-8').readlines(),
     setup_requires=[

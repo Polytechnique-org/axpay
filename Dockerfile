@@ -20,8 +20,14 @@ RUN \
         pip3 install dist/axpay-*.tar.gz
 
 ADD prod/uwsgi.ini /etc/uwsgi/uwsgi.ini
+ADD prod/settings.ini /etc/axpay/settings.ini
 
-#VOLUME ["/db"]
+VOLUME ["/db"]
+RUN chown www-data:www-data /db
+ENV AXPAY_DJANGO_SECRET_KEY blah
+ENV AXPAY_SERVICE www
+ENV DJANGO_SETTINGS_MODULE axpay.settings
+
 EXPOSE 80 8000
 
 CMD ["/usr/bin/uwsgi", "/etc/uwsgi/uwsgi.ini"]

@@ -101,7 +101,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': config.get('db.name', os.path.join(CHECKOUT_DIR, 'db.sqlite')),
+        'NAME': config.get('db.name', os.path.join(CHECKOUT_DIR, 'db/axpay.sqlite')),
         'ATOMIC_REQUESTS': True,
     }
 }

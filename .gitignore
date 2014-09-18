@@ -4,7 +4,7 @@
 *.pyo
 
 # Local dev files
-db.sqlite
+db/
 local_settings.ini
 
 # Build-related files

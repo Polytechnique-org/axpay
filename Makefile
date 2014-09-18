@@ -38,6 +38,7 @@ The following commands are available.
 
 - Production:
     docker:		Build the docker image
+    rundocker:		Run the docker image
 
 - Misc:
     clean:      	Cleanup all temporary files (*.pyc, ...)
@@ -144,7 +145,13 @@ $(JENKINS_TARGETS): jenkins_% : static_%
 docker:
 	docker build -t rbarrois/axpay .
 
-.PHONY: docker
+rundocker:
+	docker run -p 8080:80 -p 8000:8000 -v $(PWD)/db:/db -e AXPAY_DEV_DEBUG=true -e AXPAY_ENVIRONMENT=dev rbarrois/axpay
+
+rundockershell:
+	docker run -p 8080:80 -p 8000:8000 -v $(PWD)/db:/db -ti rbarrois/axpay /bin/bash
+
+.PHONY: docker rundocker rundockershell
 
 # Misc
 # ====
