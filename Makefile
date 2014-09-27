@@ -114,7 +114,8 @@ pylint:
 		--reports=no --output-format=colorized $(ROOT_DIR) || true
 
 resetdb:
-	rm -f db.sqlite
+	rm -f db/axpay.sqlite
+	[ -d db ] || mkdir db
 	$(MANAGE_PY) migrate --noinput $(MANAGE_OPTIONS)
 
 demodb: resetdb
