@@ -123,14 +123,6 @@ AUTHGROUPEX_KEY = config.get('authgroupex.key', '')
 AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'promo')
 AUTHGROUPEX_USER_MODEL = 'auth.User'
 AUTHGROUPEX_RETURN_URL = '/xorgauth/'
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
 
 if ENV == 'dev':
     AUTHGROUPEX_FAKE = True
@@ -216,12 +208,13 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 if ENV == 'dev':
