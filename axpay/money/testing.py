@@ -67,8 +67,7 @@ class ExamplePaymentOwnerFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = accounts_models.Contributor
 
-    first_name = "John"
-    last_name = factory.Sequence(lambda n: "Demo%s" % n)
+    full_name = factory.Sequence(lambda n: "John Demo%s" % n)
 
 
 class ExampleOrderFactory(factory.Factory):

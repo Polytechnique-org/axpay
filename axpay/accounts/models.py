@@ -28,8 +28,7 @@ class ContributorProfileQuerySet(models.QuerySet):
 
 
 class Contributor(models.Model):
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    full_name = models.CharField(_('full name'), max_length=100, blank=True)
     email = models.EmailField(_('email address'), blank=True)
 
     contributions_payed_until = models.DateField(blank=True, null=True, db_index=True,
@@ -46,17 +45,10 @@ class Contributor(models.Model):
         verbose_name_plural = _('contributors')
 
     def __str__(self):
-        return self.get_full_name()
+        return self.full_name
 
     def get_absolute_url(self):
         return reverse('contributions:contributor-detail', args=[self.pk])
-
-    def get_full_name(self):
-        """
-        Returns the first_name plus the last_name, with a space in between.
-        """
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
 
     def up_to_date(self, at):
         if at is None:

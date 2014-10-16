@@ -158,7 +158,7 @@ class PaymentMode(models.Model):
 
     def __str__(self):
         return '%s (%s) for %s' % (
-            self.reference, self.get_kind_display(), self.owner.get_full_name() or self.owner.username)
+            self.reference, self.get_kind_display(), self.owner.full_name or self.owner.username)
 
 
 class Order(models.Model):

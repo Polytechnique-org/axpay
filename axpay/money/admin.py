@@ -27,7 +27,7 @@ admin.site.register(models.ProductPrice, ProductPriceAdmin)
 
 class PaymentModeAdmin(admin.ModelAdmin):
     list_display = ['reference', 'owner', 'kind']
-    search_fields = ['reference', 'owner__first_name', 'owner__last_name']
+    search_fields = ['reference', 'owner__full_name']
     list_filter = ['kind']
 
 admin.site.register(models.PaymentMode, PaymentModeAdmin)
@@ -35,7 +35,7 @@ admin.site.register(models.PaymentMode, PaymentModeAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['payment_mode', 'payment_date', 'amount']
-    search_fields = ['payment_mode__owner__first_name', 'payment_mode__owner__last_name']
+    search_fields = ['payment_mode__owner__full_name']
     list_filter = ['payment_mode__kind', 'payment_date']
     date_hierarchy = 'payment_date'
 
@@ -47,8 +47,7 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_filter = ['product_price__product', 'product_price', 'order__payment_mode__kind', 'billing_date']
     search_fields = [
         'product_price__product__name', 'product_price__product__kind',
-        'user__first_name', 'user__last_name',
-        'order__payment_mode__owner__first_name', 'order__payment_mode__owner__last_name',
+        'user__full_name', 'order__payment_mode__owner__full_name',
     ]
     date_hierarchy = 'billing_date'
 

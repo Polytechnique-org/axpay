@@ -5,7 +5,6 @@
 import datetime
 
 from django import forms
-from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -42,9 +41,6 @@ class ContributorFilterForm(forms.Form):
             qs = qs.filter(ordered_items__product_price__product=data['product'])
         if data.get('user_search'):
             lookup = data['user_search']
-            qs = qs.filter(
-                models.Q(first_name__icontains=lookup)
-                | models.Q(last_name__icontains=lookup)
-            )
+            qs = qs.filter(full_name__icontains=lookup)
 
         return qs.distinct()

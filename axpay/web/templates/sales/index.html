@@ -50,7 +50,7 @@
             <td>{{ order.nb_items }}</td>
             <td>{{ order.amount|price }}</td>
             <td>{{ order.payment_mode.get_kind_display }}</td>
-            <td><a href="{{ order.payment_mode.owner.get_absolute_url }}">{{ order.payment_mode.owner.get_full_name }}</a></td>
+            <td><a href="{{ order.payment_mode.owner.get_absolute_url }}">{{ order.payment_mode.owner.full_name }}</a></td>
         </tr>
         {% endfor %}
     </tbody>

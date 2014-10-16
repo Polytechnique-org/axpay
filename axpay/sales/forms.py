@@ -5,7 +5,6 @@
 import datetime
 
 from django import forms
-from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -16,7 +15,7 @@ from axpay.money import utils as money_utils
 
 class UserChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
-        return "%s (#%d)" % (obj.get_full_name(), obj.pk)
+        return "%s (#%d)" % (obj.full_name, obj.pk)
 
 
 class OrderRegisterForm(forms.Form):
@@ -157,10 +156,6 @@ class OrderFilterForm(forms.Form):
             qs = qs.filter(items__product_price__product=data['product'])
         if data.get('user_search'):
             lookup = data['user_search']
-            qs = qs.filter(
-                models.Q(payment_mode__owner__username__icontains=lookup)
-                | models.Q(payment_mode__owner__first_name__icontains=lookup)
-                | models.Q(payment_mode__owner__last_name__icontains=lookup)
-            )
+            qs = qs.filter(payment_mode__owner__full_name__icontains=lookup)
 
         return qs.distinct()

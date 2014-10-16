@@ -25,7 +25,7 @@
         {% for contributor in contributors %}
         <tr>
             <td><a href="{{ contributor.get_absolute_url }}">{{ contributor.pk }}</a></td>
-            <td>{{ contributor.get_full_name }}</td>
+            <td>{{ contributor.full_name }}</td>
             <td>{% if contributor.has_lifetime_contribution %}<em>{% trans "Forlife" %}</em>{% else %}
                 {{ contributor.contributions_payed_until|default:"" }}
                 {% endif %}</td>

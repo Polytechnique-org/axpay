@@ -3,11 +3,11 @@
 {% load i18n money %}
 
 {% block content %}
-<h3>{% blocktrans with contributor_id=contributor.pk contributor_name=contributor.get_full_name %}Contributor {{ contributor_name }} (#{{ contributor_id }}){% endblocktrans %}</h3>
+<h3>{% blocktrans with contributor_id=contributor.pk contributor_name=contributor.full_name %}Contributor {{ contributor_name }} (#{{ contributor_id }}){% endblocktrans %}</h3>
 
 <dl class="dl-horizontal">
     <dt>{% trans "ID" %}</dt><dd>{{ contributor.pk }}</dd>
-    <dt>{% trans "Name" %}</dt><dd>{{ contributor.get_full_name }}</dd>
+    <dt>{% trans "Name" %}</dt><dd>{{ contributor.full_name }}</dd>
     <dt>{% trans "Up to date" %}</dt><dd>{{ up_to_date|yesno:_("Yes,No,Unknown") }}</dd>
     <dt>{% trans "Subscribed to J&amp;R" %}</dt><dd>{{ jr_subscribed|yesno:_("Yes,No,Unknown") }}</dd>
 </dl>
@@ -45,7 +45,7 @@
                         <td>{{ order_item.billing_date }}</td>
                         <td>{{ order_item.amount }}</td>
                         <td>{{ order_item.unit_price|price }}</td>
-                        <td><a href="{{ order_item.order.payment_mode.owner.get_absolute_url }}">{{ order_item.order.payment_mode.owner.get_full_name }}</a></td>
+                        <td><a href="{{ order_item.order.payment_mode.owner.get_absolute_url }}">{{ order_item.order.payment_mode.owner.full_name }}</a></td>
                         <td>{{ order_item.order.payment_date }}</td>
                         <td><a href="{{ order_item.order.get_absolute_url }}">{{ order_item.order.pk }} ({{ order_item.order.payment_mode.get_kind_display }} <samp>{{ order_item.order.payment_mode.reference }}</samp>)</a></td>
                     </tr>

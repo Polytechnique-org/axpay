@@ -9,9 +9,9 @@ from . import models
 
 
 class ContributorAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'has_lifetime_contribution',
+    list_display = ['full_name', 'has_lifetime_contribution',
         'contributions_payed_until', 'jr_subscribed_until']
-    search_fields = ['first_name', 'last_name']
+    search_fields = ['full_name']
     list_filter = ['has_lifetime_contribution', 'contributions_payed_until', 'jr_subscribed_until']
 
 admin.site.register(models.Contributor, ContributorAdmin)
