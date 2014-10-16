@@ -120,13 +120,34 @@ LOGIN_REDIRECT_URL = '/'
 # AuthGroupeX settings
 
 AUTHGROUPEX_KEY = config.get('authgroupex.key', '')
-AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'promo')
+AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'perms', 'promo')
 AUTHGROUPEX_USER_MODEL = 'auth.User'
 AUTHGROUPEX_RETURN_URL = '/xorgauth/'
 
 if ENV == 'dev':
     AUTHGROUPEX_FAKE = True
     AUTHGROUPEX_ENDPOINT = 'authgroupex:fake_endpoint'
+    AUTHGROUPEX_FAKE_ACCOUNTS = (
+        {
+            'displayname': 'Admin Istrateur',
+            'username': 'admin.istrateur.1942',
+            'firstname': 'Admin',
+            'lastname': 'Istrateur',
+            'email': 'admin.istrateur.1942@polytechnique.org',
+            'perms': 'admin',
+            'promo': '1942',
+        },
+        {
+            'displayname': 'Jean Dupont (user)',
+            'username': 'jean.dupont.1901',
+            'firstname': 'Jean',
+            'lastname': 'Dupont',
+            'email': 'jean.dupont.1901@polytechnique.org',
+            'perms': 'user',
+            'promo': '1901',
+        },
+    )
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
