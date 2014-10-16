@@ -43,8 +43,7 @@ class ContributorFilterForm(forms.Form):
         if data.get('user_search'):
             lookup = data['user_search']
             qs = qs.filter(
-                models.Q(username__icontains=lookup)
-                | models.Q(first_name__icontains=lookup)
+                models.Q(first_name__icontains=lookup)
                 | models.Q(last_name__icontains=lookup)
             )
 
