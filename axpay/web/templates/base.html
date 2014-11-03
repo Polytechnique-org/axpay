@@ -65,13 +65,13 @@
             {% block full-content %}
             <div class="row">
                 {% if not hide_navside %}
-                    <div class="col-lg-2 nav-sidebar">
-                        <div class="affix nav-sidebar-affix" id="navside">
+                    <div class="col-xs-2 nav-sidebar">
+                        <div class="nav-sidebar" id="navside">
                             {% block navside %}{% endblock %}
                         </div>
                     </div>
                 {% endif %}
-                <div class="{% if hide_navside %}col-lg-12{% else %}col-lg-10{% endif %} content">
+                <div class="{% if hide_navside %}col-xs-12{% else %}col-xs-10{% endif %} content">
                     <div id="messages">
                         {% if messages %}
                             {% for message in messages %}
