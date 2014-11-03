@@ -30,7 +30,7 @@ class ContributorFilterForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(ContributorFilterForm, self).__init__(*args, **kwargs)
         for field_name, placeholder in self.placeholders.items():
             self.fields[field_name].widget.attrs['placeholder'] = placeholder
 

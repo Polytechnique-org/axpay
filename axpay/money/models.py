@@ -214,7 +214,7 @@ class OrderItem(models.Model):
         return "%s for %s on %s" % (self.product_price.product.name, self.user, self.order)
 
     def save(self, *args, **kwargs):
-        res = super().save(*args, **kwargs)
+        res = super(OrderItem, self).save(*args, **kwargs)
         recompute_profile(self.user)
         return res
 

@@ -20,7 +20,7 @@ class ContributionsIndexView(generic.TemplateView):
     template_name = 'contributions/index.html'
 
     def get_context_data(self, **kwargs):
-        ctxt = super().get_context_data(**kwargs)
+        ctxt = super(ContributionsIndexView, self).get_context_data(**kwargs)
         return ctxt
 
 
@@ -101,7 +101,7 @@ class ContributorDetailView(generic.DetailView):
     model = accounts_models.Contributor
 
     def get_context_data(self, **kwargs):
-        ctxt = super().get_context_data(**kwargs)
+        ctxt = super(ContributorDetailView, self).get_context_data(**kwargs)
         contributor = ctxt['contributor']
 
         ordered_items = (contributor.ordered_items
