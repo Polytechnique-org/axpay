@@ -135,5 +135,7 @@ class ContributorDetailView(generic.DetailView):
         return ctxt
 
 
-class ExportView(generic.FormView):
-    pass
+class ExportView(generic.TemplateView):
+    topnav = 'contributions'
+    sidenav = 'exports'
+    template_name = 'contributions/contributor_export.html'
