@@ -2,10 +2,12 @@
 # Copyright (c) 2014 Polytechnique.org
 # This software is distributed under the GPLv3+ license.
 
+from __future__ import unicode_literals
 import collections
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 from axpay.accounts import models as accounts_models
 from axpay.money import models as money_models
@@ -66,6 +68,7 @@ class ContributorsListView(generic.FilterListView):
         return users
 
 
+@python_2_unicode_compatible
 class GroupedItems():
     def __init__(self, items, total):
         self.items = items

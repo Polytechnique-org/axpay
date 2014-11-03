@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2014 Polytechnique.org
 # This software is distributed under the GPLv3+ license.
-
+from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -27,6 +28,7 @@ class ContributorProfileQuerySet(models.QuerySet):
         return self.filter(jr_subscribed_until__gte=at.date())
 
 
+@python_2_unicode_compatible
 class Contributor(models.Model):
     full_name = models.CharField(_('full name'), max_length=100, blank=True)
     email = models.EmailField(_('email address'), blank=True)

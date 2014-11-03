@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2014 Polytechnique.org
 # This software is distributed under the GPLv3+ license.
-
+from __future__ import unicode_literals
 
 import datetime
 
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from . import utils
@@ -48,7 +49,7 @@ def recompute_profile(contributor):
     contributor.save()
 
 
-
+@python_2_unicode_compatible
 class Product(models.Model):
     """A base product."""
 
@@ -103,6 +104,7 @@ class ProductPriceQuerySet(models.QuerySet):
         )
 
 
+@python_2_unicode_compatible
 class ProductPrice(models.Model):
     """The price of a product at a given time."""
 
@@ -128,6 +130,7 @@ class ProductPrice(models.Model):
         )
 
 
+@python_2_unicode_compatible
 class PaymentMode(models.Model):
     """A payment mode.
 
@@ -161,6 +164,7 @@ class PaymentMode(models.Model):
             self.reference, self.get_kind_display(), self.owner.full_name or self.owner.username)
 
 
+@python_2_unicode_compatible
 class Order(models.Model):
     """Pay for a set of products on a PaymentMode
 
@@ -191,6 +195,7 @@ class Order(models.Model):
         return reverse('sales:order-detail', args=[self.pk])
 
 
+@python_2_unicode_compatible
 class OrderItem(models.Model):
     """An item from an order."""
 
